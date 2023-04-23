@@ -1,2 +1,2 @@
 # GIC-Cafe-Midterm-Project
-For testing project
+For Completed Project
