@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Screen Admin</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+                .tab:hover {
+                        background-color: white;
+                }
+
+                .list:hover {
+                        background-color: rgb(222, 139, 139);
+                }
+        </style>
+</head>
+
+<body>
+        <div class="m-auto mt-5 w-3/4 border border-black h-[700px]">
+                <ul class="grid grid-cols-6 w-3/4">
+                        <li class="list border-r-2 border-black text-center p-1" ><a href="/sale/new_cashier"> New Cashier</a></li>
+                        <li class="list border-r-2 border-black text-center p-1"><a href="#New Drink"> New Drinks</a></li>
+                        <li class="list border-r-2 border-black text-center p-1"><a href="#New Food"> New Food</a></li>
+                        <li class="list border-r-2 border-black text-center p-1"><a href="/sale/new_category"> New category</a></li>
+                        <li class="list border-r-2 border-black text-center p-1"><a href="#Order History"> Order history</a></li>
+                        <li class="list text-center p-1"> <a href="#Manage_table">Manage Table</a></li>
+                </ul>
+                <div class="container border-t border-black">
+                        <div class=" bg-gray-100 border-b border-black ">
+                                <ul class=" flex pl-10 gap-2 pt-1 bg-gray-300">
+                                        <li class="tab border-2 border-t-rose-400 border-x-rose-400 rounded-t-lg p-1"
+                                                onclick="openpage(this,'Cashier')" id="defaultOpen"><a href="#Cashier">
+                                                        Cashiers</a></li>
+                                        <li class="tab border-2 border-t-rose-400 border-x-rose-400 rounded-t-lg p-1"
+                                                onclick="openpage(this,'Drink')"><a href="#Drink"> Drinks</a></li>
+                                        <li class="tab border-2 border-t-rose-400 border-x-rose-400 rounded-t-lg p-1"
+                                                onclick="openpage(this,'Food')"><a href="#Food"> Foods</a></li>
+                                </ul>
+                        </div>
+                        <!-- cashier -->
+                        <div class="tabcontent" id="Cashier">
+                                <div class=" grid grid-cols-2">
+                                        <div class="left border-r border-black">
+                                                <div class="grid grid-cols-4 m-3 p-3 bg-red-400">
+                                                        <p></p>
+                                                        <p>Cashier Name</p>
+                                                        <p>Login</p>
+                                                        <p class="pl-5">Action</p>
+                                                </div>
+                                                <div class="grid grid-cols-4 pl-5">
+                                                        <p>1</p>
+                                                        <p>Dalin</p>
+                                                        <p>lin</p>
+                                                        <p class="flex gap-5 pr-5"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor"
+                                                                class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                        </svg>
+                                                </p>
+                                                </div>
+                                                <div class="grid grid-cols-4 pl-5">
+                                                        <p>2</p>
+                                                        <p>Dalin</p>
+                                                        <p>lin</p>
+                                                        <p class="flex gap-5"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor"
+                                                                class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                        </svg>
+                                                </p>
+                                                </div>
+                                        </div>
+                                        <div class="right bg-sky-100 pl-5 h-[623px]">
+                                                <h1 class="font-semibold text-center text-2xl">Cashier
+                                                        Information</h1>
+                                                <div class="flex items-center m-5 gap-[90px]">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/1338/1338120.png"
+                                                                alt="cashier" width="50%">
+                                                        <div class="text-lg">
+                                                                <p>Name: dalin </p>
+                                                                <P>Age:20</P>
+                                                                <p>Sex:</p>
+                                                                <p>Hired Day:25-05-2012 </p>
+                                                                <p>Served:12-06-2012</p>
+                                                                <p>Login:lin</p>
+                                                                <p>Password:123</p>
+                                                                <p>last login:23-09-2015</p>
+                                                        </div>
+                                                </div>
+                                                <div class="p-4 text-lg">
+                                                        <p>Last Login:25-5-2126 8:00</p>
+                                                        <p>Last served:99</p>
+                                                </div>
+                                                
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- drink -->
+                        <div class="tabcontent" id="Drink">
+                                <div class=" grid grid-cols-2">
+                                        <div class="left border-r border-black">
+                                                <div class="grid grid-cols-5 m-3 p-3 bg-red-400">
+                                                        <p></p>
+                                                        <p>Drink Code</p>
+                                                        <p>Drink Name</p>
+                                                        <p>Prices($)</p>
+                                                        <p class="pl-5">Action</p>
+                                                </div>
+                                                <div class="grid grid-cols-5 pl-5">
+                                                        <p>1</p>
+                                                        <p>DH001</p>
+                                                        <p>Espresso</p>
+                                                        <p>2.1</p>
+                                                        <p class="flex gap-5"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                        fill="none" viewBox="0 0 24 24"
+                                                                        stroke-width="1.5" stroke="currentColor"
+                                                                        class="w-6 h-6">
+                                                                        <path stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                                </svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                        viewBox="0 0 24 24" stroke-width="1.5"
+                                                                        stroke="currentColor" class="w-6 h-6">
+                                                                        <path stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                </svg>
+                                                        </p>
+                                                </div>
+                                                <div class="grid grid-cols-5 pl-5">
+                                                        <p>2</p>
+                                                        <p>DI002</p>
+                                                        <p>Iced Americano</p>
+                                                        <p>2.3</p>
+                                                        <p class="flex gap-5"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor"
+                                                                class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                        </svg>
+                                                </p>
+                                                </div>
+                                        </div>
+                                        <div class="right bg-sky-100 pl-5 h-[622px] p-2">
+                                                <h1 class="font-semibold text-center text-2xl">Drink Information</h1>
+                                                <div class="flex items-center m-5 gap-[20px] pt-5">
+                                                        <img src="https://www.starbucksathome.com/sites/default/files/styles/nutrition_instruction_image/public/2022-05/SBUX_NDG_Iced-Americano-Cup_Website_LongShadow_220225_1_1646048258200.png?itok=6gCbfDgi"
+                                                                alt="drink" width="40%">
+                                                        <div class="text-lg">
+                                                                <p>Code: DH001 </p>
+                                                                <P>Name: Esproesso</P>
+                                                                <p>Category:</p>
+                                                                <p>Price: </p>
+                                                                <p>Order:</p>
+                                                                <p>Note: Good for person who likes High coffee
+                                                                        compression and for up the whole night.</p>
+                                                        </div>
+                                                </div>
+                                                <p class="p-8 text-lg">Last order:25-07-2015</p>
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- food  -->
+                        <div class="tabcontent   " id="Food">
+                                <div class=" grid grid-cols-2">
+                                        <div class="left border-r border-black">
+                                                <div class="grid grid-cols-5 m-3 p-3 bg-red-400">
+                                                        <p></p>
+                                                        <p>Food Code</p>
+                                                        <p>Food Name</p>
+                                                        <p>Prices($)</p>
+                                                        <p class="pl-5">Action</p>
+                                                </div>
+                                                <div class="grid grid-cols-5 pl-5">
+                                                        <p>1</p>
+                                                        <p>DF001</p>
+                                                        <p>French Fries</p>
+                                                        <p>1.5</p>
+                                                        <p class="flex gap-5"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor"
+                                                                class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                        </svg>
+                                                </p>
+                                                </div>
+                                                <div class="grid grid-cols-5 pl-5">
+                                                        <p>2</p>
+                                                        <p>DF002</p>
+                                                        <p>Sandwich</p>
+                                                        <p>1.8</p>
+                                                        <p class="flex gap-5"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor"
+                                                                class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor" class="w-6 h-6">
+                                                                <path stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                        </svg>
+                                                </p>
+                                                </div>
+                                        </div>
+                                        <div class="right bg-sky-100 pl-5 h-[623px]">
+                                                <h1 class="font-semibold text-center text-2xl">Food Information</h1>
+                                                <div class="m-5 object-center p-3">
+                                                        <img src="https://img.apmcdn.org/4b2716626c9ff3f6e5dfebe520eb592c33cf1e7b/uncropped/941f50-splendid-table-french-fries.jpg"
+                                                                alt="food" width="100%" class="">
+                                                        <div class="grid grid-cols-2 text-lg pt-5">
+                                                                <p>Code: DF001 </p>
+                                                                <P>Name: French Fries</P>
+                                                                <p>Category: food</p>
+                                                                <p>Price: 1.5$</p>
+                                                                <p>Order: 99 times</p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <script>
+                function openpage(elmnt, pageName) {
+                        var i, tabcontent, tab, right;
+                        tabcontent = document.getElementsByClassName("tabcontent");
+                        for (i = 0; i < tabcontent.length; i++) {
+                                tabcontent[i].style.display = "none";
+
+                        }
+                        tab = document.getElementsByClassName("tab");
+                        for (i = 0; i < tab.length; i++) {
+                                tab[i].className = tab[i].className.replace("active");
+                        }
+                        document.getElementById(pageName).style.display = "block";
+                        elmnt.currentTarget.className += "active";
+                }
+                document.getElementById("defaultOpen").click();
+        </script>
+</body>
+
+</html>

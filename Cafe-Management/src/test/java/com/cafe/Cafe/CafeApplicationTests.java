@@ -1,10 +1,10 @@
-package gic.i4b.group6.CafeManagement;
+package com.cafe.Cafe;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CafeManagementApplicationTests {
+class CafeApplicationTests {
 
 	@Test
 	void contextLoads() {

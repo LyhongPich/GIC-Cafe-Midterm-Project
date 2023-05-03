@@ -1,4 +1,4 @@
-package gic.i4b.group6.CafeManagement;
+package com.cafe.Cafe;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -7,7 +7,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(CafeManagementApplication.class);
+		return application.sources(CafeApplication.class);
 	}
 
 }

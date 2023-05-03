@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Category</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+        <form action="/sale" method="post" class="container border border-black w-fit absolute top-1/4 left-1/2 transform -translate-x-1/4 -translate-y-1/4 bg-gray-200 s text-lg">
+                <h1 class="m-2  pl-2 text-lg font-semibold">New Category</h1>
+                <div cal>
+                        <div class="m-3 pt-5 border-t border-black">
+                                <label for="code">Category code:</label>
+                                <input type="text" name="code" id="" class="input border border-black ml-5">
+                        </div>
+                        <div class="m-3">
+                                <label for="text">Category name:</label>
+                                <input type="text" name="name" id="" class="input border border-black ml-4">
+                        </div>
+                        <div class="button m-3 ">
+                                <button class="border-2 border-black w-[180px] rounded-lg bg-teal-300" type="button">OK</button>
+                                <button class="border-2 border-black w-[90px] rounded-lg bg-teal-300" type="button">Cancel</button>
+                        </div>
+                </div>
+        </form>
+</body>
+</html>
