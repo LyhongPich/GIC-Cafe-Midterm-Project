@@ -8,9 +8,9 @@
         <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-        <form method="post" action="/sale" class="container border border-black w-1/3 absolute top-1/4 left-1/2 transform -translate-x-1/4 -translate-y-1/4 bg-gray-200 h-[400px] text-lg">
+        <form method="get" action="/sale" class="container border border-black absolute top-1/4 left-1/3 transform -translate-x-1/4 -translate-y-1/4 bg-gray-200 h-[450px] text-lg md:w-full lg:w-1/2 lg:w-fit">
                 <h1 class="m-2  pl-2 text-lg font-semibold">New Cashier</h1>
-                <div  class="m-2 p-2 border-t border-black flex gap-5">
+                <div  class="m-2 p-2 border-t border-black flex gap-40 pl-5 ">
                         <div class="">
                                 <div>
                                         <label for="text">First name: </label>
@@ -22,7 +22,7 @@
                                 </div>
                                 <div>
                                         <label for="text">Sex: </label>
-                                        <select id="" name="Sex" class="w-[100px] text-center border border-black m-2 ml-[90px]">
+                                        <select id="" name="Sex" class="w-[100px] text-center border border-black m-2 ml-[95px]">
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
                                                 <option value="other">other</option>
@@ -34,20 +34,21 @@
                                 </div>
                                 <div>
                                         <label for="login">Login:</label>
-                                        <input type="text" name="" id=""class="input border border-black m-2 ml-[75px]">
+                                        <input type="text" name="" id=""class="input border border-black m-2 ml-[80px]">
                                 </div>
                                 <div>
                                         <label for="password">Password:</label>
                                         <input type="password" name="password" id="" class="input border border-black m-2 ml-[50px]">
                                 </div>
                                 <div class="button m-3 ">
-                                        <button class="border-2 border-black w-[180px] rounded-lg bg-teal-300" type="button">OK</button>
-                                        <button class="border-2 border-black w-[90px] rounded-lg bg-teal-300" type="button">Cancel</button>
+                                        <button class="border-2 border-black w-[180px] rounded-lg bg-teal-300" ><a href="./Sale.html">OK</a> </button>
+                                        <button class="border-2 border-black w-[90px] rounded-lg bg-teal-300" ><a href="./Sale.html">Cancel</a> </button>
                                 </div>
                         </div>
                         
-                        <img src="https://cdn-icons-png.flaticon.com/512/1338/1338120.png" alt="cashier" width="35%" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/1338/1338120.png" alt="cashier" width="30%" >
                 </div>
         </form>
+        <script></script>
 </body>
 </html>
