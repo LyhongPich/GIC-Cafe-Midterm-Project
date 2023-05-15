@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Selection</title>
+
+    <style>
+        body{
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content{
+            width: 1020px;
+            height: 600px;
+            display: flex;
+        }
+        .left {
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 21px;
+            background-color:gainsboro;
+            overflow-y: auto;
+            padding: 20px 0px 20px 24px;
+        }
+        .right{
+            width: 50%;
+            background-color: honeydew;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .table{
+            width: 75px;
+            height: 75px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: chartreuse;
+        }
+        .tableReserve{
+            width: 75px;
+            height: 75px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: red;
+        }
+        .table:hover{
+            background-color: cornflowerblue;
+        }
+        .tableReserve:hover{
+            background-color: brown;
+        }
+        .tableInfo{
+            width: 300px;
+            height: 125px;
+            background-color:paleturquoise;
+        }
+        .header{
+            text-align: center;
+        }
+        .info{
+            padding-left: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div id="tableChoice" class="left"></div>
+        <div class="right">
+            <div id="tableInfo" class="tableInfo"></div>
+        </div>
+    </div>
+
+    <script>
+
+        let tableNum = 25;
+        let table_choice = document.getElementById('tableChoice');
+        let table_info = document.getElementById('tableInfo');
+
+        function tableChoice() {
+            let content = '';
+            for(let i=1; i<=tableNum; i++) {
+                if(i<(tableNum/2)+1) {
+                    if(i<10) {
+                        content += `
+                            <div id="table${i}" onmouseover="tableInfo(this)" class="table">
+                                <span>0${i}</span>
+                            </div>
+                        `;
+                    }
+                    else{
+                        content += `
+                            <div id="table${i}" onmouseover="tableInfo(this)" class="table">
+                                <span>${i}</span>
+                            </div>
+                        `;
+                    }
+                }
+                else{
+                    if(i<10) {
+                        content += `
+                            <div id="table${i}" onmouseover="tableInfo(this)" class="tableReserve">
+                                <span>0${i}</span>
+                            </div>
+                        `;
+                    }
+                    else{
+                        content += `
+                            <div id="table${i}" onmouseover="tableInfo(this)" class="tableReserve">
+                                <span>${i}</span>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            table_choice.innerHTML = content;
+        }
+
+        function tableInfo(table) {
+            let content = '';
+
+            let select = document.getElementById(`${table.id}`);
+
+            // Extract only number from table id
+            let number = table.id.match(/\d+/g);
+            
+            if(number<(tableNum/2)+1) {
+                select.addEventListener('click',()=>{
+                    location.href = '/drinkSelect';
+                })
+                if(number<10) {
+                    content = `
+                        <div class="header">
+                            <h3>Table Information</h3>
+                        </div>
+                        <div class="info">
+                            <span>Table: 0${number}</span><br>
+                            <span>Status: Available</span><br>
+                            <span>Order: </span>
+                        </div>
+                    `
+                }
+                else{
+                    content = `
+                        <div class="header">
+                            <h3>Table Information</h3>
+                        </div>
+                        <div class="info">
+                            <span>Table: ${number}</span><br>
+                            <span>Status: Available</span><br>
+                            <span>Order: </span>
+                        </div>
+                    `
+                }
+                table_info.style.background = 'chartreuse';
+            }
+            else{
+                select.addEventListener('click', ()=>{
+                    alert(`Table ${number} is reserved!`);
+                })
+                if(number<10) {
+                    content = `
+                        <div class="header">
+                            <h3>Table Information</h3>
+                        </div>
+                        <div class="info">
+                            <span>Table: 0${number}</span><br>
+                            <span>Status: Unpaid</span><br>
+                            <span>Order: </span>
+                        </div>
+                    `
+                }
+                else{
+                    content = `
+                        <div class="header">
+                            <h3>Table Information</h3>
+                        </div>
+                        <div class="info">
+                            <span>Table: ${number}</span><br>
+                            <span>Status: Unpaid</span><br>
+                            <span>Order: </span>
+                        </div>
+                    `
+                }
+                table_info.style.background = 'red';
+            }
+            
+            table_info.innerHTML = content;
+        }
+
+        tableChoice();
+    </script>
+</body>
+</html>

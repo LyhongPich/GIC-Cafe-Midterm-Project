@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div th:if="${param.invalidDate}">
+        <h4>Please input valid Birth date</h4>
+    </div>
+    <div class="">
+        <h3>New User</h3>
+    </div>
+    <form th:action="@{/newUser/addUser}" method="post">
+        <div class="">
+            <label for="firstName">
+                First Name
+            </label>
+            <input type="text" name="firstName" required>
+        </div>
+        <div class="">
+            <label for="lastName">
+                Last Name
+            </label>
+            <input type="text" name="lastName" required>
+        </div>
+        <div class="">
+            <label for="gender">
+                Sex
+            </label>
+            <select name="gender" id="gender">
+                <option th:value="Male">Male</option>
+                <option th:value="Female">Female</option>
+            </select>
+        </div>
+        <div class="">
+            <label for="dob">
+                Date of Birth
+            </label>
+            <input type="date" name="dob" required>
+        </div>
+        <div class="">
+            <label for="username">
+                Username
+            </label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="">
+            <label for="password">
+                Password
+            </label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="">
+            <label for="role">
+                Role
+            </label>
+            <select name="role" id="role">
+                <option th:value="Cashier">Cashier</option>
+                <option th:value="Admin">Admin</option>
+            </select>
+        </div>
+        <div class="">
+            <label for="profile">
+                Profile
+            </label>
+            <input type="text" name="profile" required>
+        </div>
+        <br><br>
+        <div class="">
+            <button type="submit">Ok</button>
+        </div>
+    </form>
+</body>
+</html>

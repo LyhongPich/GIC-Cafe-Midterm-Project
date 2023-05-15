@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drink Selection</title>
+
+    <style>
+        body{
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content{
+            width: 1020px;
+            height: 600px;
+            display: flex;
+        }
+        .left{
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color:gainsboro;
+        }
+        .categories{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            width: 408px;
+            height: 100px;
+            background-color: aqua;
+            overflow-x: auto;
+        }
+        .type{
+            width: 90px;
+            height: 90px;
+            background-color: darkorange;
+            margin: 5px;
+        }
+        .drink{
+            margin-top: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            background-color: aquamarine;
+            width: 408px;
+            height: 440px;
+        }
+        .product{
+            width: 120px;
+            height: 90px;
+            background-color: yellow;
+            margin: 5px;
+        }
+        .right{
+            width: 50%;
+            background-color: honeydew;
+        }
+        .header{
+            text-align: center;
+        }
+        .order{
+            display: flex;
+            flex-direction: column;
+            height: 450px;
+            overflow-y: auto;
+        }
+        .item{
+            display: flex;
+            width: 400px;
+            margin: 10px auto;
+        }
+        .item:hover{
+            background-color: aqua;
+        }
+        .item button:hover{
+            background-color:darkorange;
+        }
+        .name{
+            margin-left: 25px;
+        }
+        .size{
+            margin-left: 75px;
+        }
+        .qtd{
+            margin-left: 25px;
+        }
+        .price{
+            margin-left: 25px;
+        }
+        .edit{
+            margin-left: 30px;
+        }
+        .remove{
+            margin-left: 30px;
+        }
+        .checkout{
+            display: flex;
+            justify-content: end;
+            margin-right: 50px;
+        }
+        .checkout button:hover{
+            background-color: cyan;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="left">
+            <div id="categories" class="categories">
+                
+            </div>
+            <div id="drink" class="drink">
+                
+            </div>
+        </div>
+        <div class="right">
+            <div class="header">
+                <h4>Order Information</h4>
+            </div>
+            <div class="order">
+                <div class="item">
+                    <div class="number">
+                        <span>1</span>
+                    </div>
+                    <div class="name">
+                        <span>Coffee</span>
+                    </div>
+                    <div class="size">
+                        <span>R</span>
+                    </div>
+                    <div class="qtd">
+                        <span>1</span>
+                    </div>
+                    <div class="price">
+                        <span>$2</span>
+                    </div>
+                    <div class="edit">
+                        <button style="cursor: pointer;">Edit</button>
+                    </div>
+                    <div class="remove">
+                        <button style="cursor: pointer;">Remove</button>
+                    </div>
+                </div>
+            </div>
+            <div class="checkout">
+                <button style="cursor: pointer;">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let cateNum = 3;
+        let drinkNum = 10;
+        let click = false;
+
+        let categories = document.getElementById('categories');
+        let drink = document.getElementById('drink');
+
+        function cate() {
+            let content = '';
+            for(let i=1; i<=cateNum; i++) {
+                content += `
+                    <div class="type">
+                        <span>${i}</span>
+                    </div>
+                `;
+            }
+            categories.innerHTML = content;
+        }
+        function drinks() {
+            let content = '';
+            for(let i=1; i<=drinkNum; i++) {
+                content += `
+                    <div id='drink${i}' onclick="OrderDrink(this)" class="product">
+                        <span>${i}</span>
+                    </div>
+                `;
+            }
+            drink.innerHTML = content;
+        }
+
+        function OrderDrink(drink) {
+            click = !click;
+            let number = drink.id.match(/\d+/g);
+
+            let drinks = {
+                id: `drink${number}`,
+                
+            }
+
+            if(click == true) {
+
+            }
+
+        }
+        cate();
+        drinks();
+
+    </script>
+</body>
+</html>
