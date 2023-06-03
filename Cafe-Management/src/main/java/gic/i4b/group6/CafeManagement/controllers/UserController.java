@@ -1,66 +1,95 @@
 package gic.i4b.group6.CafeManagement.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import gic.i4b.group6.CafeManagement.models.User;
+import gic.i4b.group6.CafeManagement.services.DrinkService;
 import gic.i4b.group6.CafeManagement.services.UserService;
 
 @Controller
 public class UserController {
-
     private UserService userService;
-    
+    private DrinkService drinkService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, DrinkService drinkService) {
         this.userService = userService;
+        this.drinkService = drinkService;
     }
 
-    @GetMapping("/adminHome")
-    public String homeAdmin(Model model) {
-        model.addAttribute("users", userService.getAllUser());
-        return "AdminHome";
+    @GetMapping("/admin/addCashier")
+    public String addCashierView() {
+        return "New_cashier";
+    }
+    
+    @PostMapping("/admin/addCashier")
+    public String addCashier(@RequestParam("firstName") String firstName,
+                            @RequestParam("lastName") String lastName,
+                            @RequestParam("gender") String gender,
+                            @RequestParam("dob") String dob,
+                            @RequestParam("username") String username,
+                            @RequestParam("password") String password,
+                            @RequestParam("profile") MultipartFile profile) {
+        userService.setUser(firstName, lastName, gender, dob, username, password, profile);
+        return "redirect:/admin/addCashier";
     }
 
-
-
-    @GetMapping("/newUser")
-    public String newUser() {
-        return "AddUser";
+    @GetMapping("/admin")
+    public String adminView(Model model) {
+        model.addAttribute("admin", userService.getAdmin());
+        model.addAttribute("cashiers", userService.getAllCashier());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("ageList", userService.getAgeAllCashier());
+        return "admin";
     }
 
-    @PostMapping("/newUser/addUser")
-    public String addUser(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
-                        @RequestParam("gender") String gender, @RequestParam("dob") String dob,
-                        @RequestParam("username") String username, @RequestParam("password") String password,
-                        @RequestParam("role") String role, @RequestParam("profile") String profile) throws ParseException {
-        User user = new User();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar now = Calendar.getInstance();
-
-        Calendar input = Calendar.getInstance();
-        input.setTime(format.parse(dob));
-
-        if(now.compareTo(input)>0) {
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setGender(gender);
-            user.setDateOfBirth(format.parse(dob));
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setRole(role);
-            user.setProfilePicture(profile);
-            userService.addUser(user);
-            return "redirect:/newUser";
-        }
-        return "redirect:/newUser?invalidDate";
+    @GetMapping("/admin/edit_cashier/{id}")
+    public String editCashier(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("cashier", userService.getCashierById(id));
+        return "Edit_cashier";
     }
 
+    @PostMapping("/cashierUpdated/{id}")
+    public String cashierEdited(@PathVariable("id") Integer id,
+                                @RequestParam("firstName") String firstName,
+                                @RequestParam("lastName") String lastName,
+                                @RequestParam("gender") String gender,
+                                @RequestParam("dob") String dob,
+                                @RequestParam("username") String username,
+                                @RequestParam("password") String password,
+                                @RequestParam("profile") MultipartFile profile) {
+        userService.editUser(id, firstName, lastName, gender, dob, username, password, profile);
+        return "redirect:/admin";
+    }
+    @GetMapping("/admin/confirm_remove_cashier/{id}")
+    public String cashierRemoveConfimation(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("cashier", userService.getCashierById(id));
+        return "Remove_Cashier_Confirm";
+    }
+    @PostMapping("/admin/remove_cashier/{id}")
+    public String cashierRemoved(@PathVariable("id") Integer id) {
+        userService.removeUser(id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "Login";
+    }
+
+    // @PostMapping("/login/user")
+    // public String loginCheck(@RequestParam("username") String username, @RequestParam("password") String password) {
+    //     String output = userService.verifyUser(username, password);
+    //     if(output.equals("Admin")) {
+    //         return "redirect:/admin";
+    //     }
+    //     else if(output.equals("Cashier")) {
+    //         return "redirect:/tableSelection";
+    //     }
+    //     return "redirect:/login?invalid";
+    // }
 }

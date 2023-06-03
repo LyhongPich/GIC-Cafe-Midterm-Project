@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Confirm Remove Account</title>
+    <style>
+        .content{
+            margin: auto;
+            width: 50%;
+            height: 50vh;
+            background-color: aquamarine;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+        }
+        .btn1{
+            width: 300px;
+            height: 50px;
+            background-color: rgb(27, 124, 27);
+            border-radius: 8px;
+            font-size: 20px;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 5px;
+        }
+        .btn1:hover{
+            background-color: rgb(206, 10, 10);
+            color: black;
+        }
+        .btn2{
+            width: 200px;
+            height: 50px;
+            background-color: gray;
+            border-radius: 8px;
+            font-size: 20px;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 5px;
+        }
+        .btn2:hover{
+            background-color: burlywood;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <form th:action="@{/admin/remove_drink/{id} (id=${drink.getId()})}" method="post" th:object="${drink}">
+        <div class="content" >
+            <div class="text-center text-[26px] font-extrabold">
+                <p>Are you sure you want to remove the drink</p>
+                <p>with code <span th:text="${drink.getDrink_code()}"></span>?</p>
+            </div>
+            <br><br><br>
+            <div class="flex font-bold">
+                <button type="submit"><a class="btn1">Remove</a></button>
+                <a href="/admin" class="btn2">Cancel</a>
+            </div>
+        </div>
+    </form>
+    
+</body>
+</html>

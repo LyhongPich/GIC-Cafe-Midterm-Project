@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Screen Admin</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+               .tab:hover {
+                        background-color:rgb(174, 174, 220);
+                }
+
+                .list:hover {
+                        background-color:rgb(174, 174, 220);
+                }
+                .dropbtn {
+                        /* background-color: rgb(59 130 246); */
+                        color: black;
+                        padding: 16px;
+                        font-size: 16px;
+                        border: none;
+                        width: 150px;
+                }
+
+                .dropdown {
+                        position: relative;
+                        display: inline-block;
+                }
+
+                .dropdown-content {
+                        display: none;
+                        position: absolute;
+                        background-color: #f1f1f1;
+                        min-width: 160px;
+                        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                        z-index: 1;
+                }
+
+                .dropdown-content a {
+                        color: black;
+                        padding: 12px 16px;
+                        text-decoration: none;
+                        display: block;
+                }
+
+                .dropdown-content a:hover {
+                        background-color: #ddd;
+                }
+
+                .dropdown:hover .dropdown-content {
+                        display: block;
+                }
+
+                .dropdown:hover .dropbtn {
+                        background-color: rgb(147 197 253);
+                } 
+                .image {
+                        display: flex;
+                }
+                .wrap{
+                        margin: auto;
+                        width: 50%;
+                        height: 50vh;
+                        background-color: aquamarine;
+                        display: none;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        border: 1px solid black;
+                }
+                /* .deleteCashierVerify {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        height: 50vh;
+                } */
+                .btn1 {
+                        width: 300px;
+                        height: 50px;
+                        /* background-color: rgb(27, 124, 27); */
+                        border-radius: 8px;
+                        font-size: 20px;
+                        font-weight: 400;
+                        color: #ffffff;
+                        border: none;
+                }
+                .btn1:hover {
+                        /* background-color: rgb(98, 98, 161); */
+                        color: black;
+                        font-weight: bold;
+                }
+                .btn2 {
+                        width: 200px;
+                        height: 50px;
+                        /* background-color: gray; */
+                        border-radius: 8px;
+                        font-size: 20px;
+                        font-weight: 400;
+                        color: #ffffff;
+                        border: none;
+                }
+                .btn2:hover {
+                        /* background-color: burlywood; */
+                        color: black;
+                        font-weight: bold;
+                }
+                .buttonCashier {
+                        width: 550px;
+                        height: 60px;
+                }
+        </style>
+</head>
+
+<body>
+        <div class=" border border-black w-screen h-full lg:w-full xl:w-full md:w-full ">
+                <div class="grid grid-cols-2 w-full  border-b border-black bg-blue-200">
+                        <div class="flex items-center  justify-start pl-5">
+                                <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-design-creative-idea-logo-elements-2.png"
+                                        width="10%" alt="cafe" class="object-center">
+                                <h1 class="  text-4xl pl-5">Cafe</h1>
+                        </div>
+                        <div class="flex items-center justify-end  ">
+                                <div class="dropdown ">
+                                        <button th:object="${admin}" class="dropbtn flex rounded-full">
+                                                <img th:src="@{'data:image/jpeg;base64,' + ${admin.getProfile()} }"
+                                                        width="30%" alt="admin profile" class="pr-3">
+                                                <h1 th:text="${admin.getUsername()}" ></h1>
+                                                <div class="flex items-center py-1 ">
+                                                        <svg class="fill-current h-4 w-5"
+                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                <path
+                                                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                                        </svg>
+                                                </div>
+                                        </button>
+                                        <div class="dropdown-content">
+                                                <a href="#">About</a>
+                                                <a href="/login">
+                                                        <div class="flex ">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="15%"
+                                                                        fill="none" viewBox="0 0 24 24"
+                                                                        strokeWidth={1.5} stroke="currentColor"
+                                                                        className="w-6 h-6">
+                                                                        <path strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                                                                </svg> Log out
+                                                        </div>
+                                                </a>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <div class=" border-b border-black">
+                        <ul class="grid grid-cols-6 w-3/4">
+                                <a href="/admin/addCashier">
+                                        <li class="list border-r border-black text-center p-1 rounded-lg">New Cashier</li>
+                                </a>
+                                <a href="/admin/addNewDrink">
+                                        <li class="list border-r border-black text-center p-1 rounded-lg">New Drink</li>
+                                </a>
+                                <!-- <li class="list border-r border-black text-center p-1 rounded-lg"><a href="#New Food">
+                                                New Food</a></li> -->
+                                <a href="/admin/addCategory">
+                                        <li class="list border-r border-black text-center p-1 rounded-lg">New Category</li>
+                                </a>
+                                <a href="#Order History">
+                                        <li class="list border-r border-black text-center p-1 rounded-lg">Order History</li>
+                                </a>
+                                <a href="/admin/tableManagement">
+                                        <li class="list text-center p-1 rounded-lg border-r border-black">Manage Table</li>
+                                </a>
+                        </ul>
+                </div>
+
+                <div class="">
+                        <div class=" border-b border-black items-center">
+                                <ul class=" flex pl-10 gap-2 pt-1">
+                                        <li id="btn_cashier" class="tab border-2 border-t-rose-400 border-x-rose-400 rounded-t-lg p-1">
+                                                Cashiers
+                                        </li>
+                                        <li id="btn_drink" class="tab border-2 border-t-rose-400 border-x-rose-400 rounded-t-lg p-1">
+                                                Drinks
+                                        </li>
+                                        <!-- <li class="tab border-2 border-t-rose-400 border-x-rose-400 rounded-t-lg p-1"
+                                                onclick="openpage(this,'Food')"><a href="#Food"> Foods</a></li> -->
+                                </ul>
+                        </div>
+                        <!-- cashier -->
+                        <div class="tabcontent" id="Cashier">
+                                <div class="grid grid-cols-2 divide-x ">
+                                        <div class=" ">
+                                                <table class="  text-left text-gray-500 w-full lg:w-full xl:w-full">
+                                                        <thead class="text-gray-700 uppercase bg-blue-200 ">
+                                                                <tr>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                No
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Cashier_Name
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Login
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Action
+                                                                        </th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <tr th:each="cashier, i : ${cashiers}" th:with="age=${ageList[__${i.index}__]}" class="" 
+                                                                        th:id="${cashier.getId()}"
+                                                                        th:onmouseover="changeBackground([[${cashier.getId()}]])"
+                                                                        th:onmouseout="defaultBackground([[${cashier.getId()}]])"
+                                                                        th:onclick="showInfoCashier([[${cashier.getFirst_name()}]] , [[${cashier.getLast_name()}]] , [[${cashier.getGender()}]] , [[${#dates.format(cashier.getHired_date(), 'dd/MM/yyyy')}]] , [[${cashier.getUsername()}]] , [[${#strings.repeat('*', cashier.getPassword().length())}]] , [[${age}]] , [[${cashier.getProfile()}]] , [[${#dates.format(cashier.getLogin_date(), 'dd/MM/yyyy hh:mm:ss')}]])">
+                                                                        <th th:text="${cashier.getId()-1}" scope="row" class="px-6 py-4 font-medium  ">
+                                                                                <!-- 1 -->
+                                                                        </th>
+                                                                        <td th:text="${cashier.getFirst_name()+' '+cashier.getLast_name()}" class="px-6 py-4 whitespace-nowrap">
+                                                                                <!-- Scheatdalin -->
+                                                                        </td>
+                                                                        <td th:text="${cashier.getUsername()}" class="px-6 py-4  whitespace-nowrap">
+                                                                                <!-- Dalin -->
+                                                                        </td>
+                                                                        <td class="px-6 py-4 flex ">
+                                                                                <a th:href="@{/admin/edit_cashier/{id} (id=${cashier.getId})}"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                                                        </svg>
+                                                                                </a>
+                                                                                <a th:href="@{/admin/confirm_remove_cashier/{id} (id=${cashier.getId()})}"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                                        </svg>
+                                                                                </a>
+                                                                        </td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                        <div
+                                                class="  pl-5 bg-sky-100 w-full  lg:w-full lg:h-screen xl:w-full xl:h-screen border-l border-black">
+                                                <h1 class="font-semibold text-center text-2xl">Cashier
+                                                        Information</h1>
+                                                <div id="infoCashier">
+                                                        
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- Drink -->
+                        <div class="tabcontent hidden" id="Drink">
+                                <div class="grid grid-cols-2 divide-x flex  ">
+                                        <div class="w-full ">
+                                                <table class="  text-left text-gray-500 w-full lg:w-full xl:w-full">
+                                                        <thead class="text-gray-700 uppercase bg-blue-200 ">
+                                                                <tr>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                No
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Drink_code
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Drink_Name
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Price($)
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Action
+                                                                        </th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <tr th:each="drink : ${drinks}" class="" 
+                                                                        th:id="${drink.getId()}"
+                                                                        th:onmouseover="changeBackgroundDrink([[${drink.getId()}]])"
+                                                                        th:onmouseout="defaultBackgroundDrink([[${drink.getId()}]])"
+                                                                        th:onclick="showInfoDrink([[${drink.getDrink_code()}]], [[${drink.getDrink_name()}]], [[${drink.getCategories.getCategory_name()}]], [[${drink.getPrices()}]], [[${drink.getNote()}]], [[${drink.getDrink_picture()}]])">
+                                                                        <th th:text="${drink.getId()}" scope="row" class="px-6 py-4 font-medium  ">
+                                                                                <!-- 1 -->
+                                                                        </th>
+                                                                        <td th:text="${drink.getDrink_code()}" class="px-6 py-4 whitespace-nowrap">
+                                                                                <!-- DH001 -->
+                                                                        </td>
+                                                                        <td th:text="${drink.getDrink_name()}" class="px-6 py-4  whitespace-nowrap">
+                                                                                <!-- Espresso -->
+                                                                        </td>
+                                                                        <td th:text="${drink.getPrices()}" class="px-6 py-4  whitespace-nowrap">
+                                                                                
+                                                                        </td>
+                                                                        <td class="px-6 py-4 flex">
+                                                                                <a th:href="@{/admin/edit_drink/{id} (id=${drink.getId()})}"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                                                        </svg></a>
+                                                                                <a th:href="@{/admin/confirm_remove_drink/{id} (id=${drink.getId()})}"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                                        </svg></a>
+                                                                        </td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                        <div
+                                                class="  pl-5 bg-sky-100 w-full  lg:w-full lg:h-screen xl:w-full xl:h-screen border-l border-black">
+                                                <h1 class="font-semibold text-center text-2xl">Drink
+                                                        Information</h1>
+                                                <div id="infoDrink">
+                                                        
+                                                </div>
+                                        </div>
+
+                                </div>
+                        </div>
+                        <!-- Food -->
+                        <!-- <div class="tabcontent " id="Food">
+                                <div class="grid grid-cols-2 divide-x flex  ">
+                                        <div class="w-full ">
+                                                <table class="  text-left text-gray-500 w-full lg:w-full xl:w-full">
+                                                        <thead class="text-gray-700 uppercase bg-blue-200 ">
+                                                                <tr>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                No
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Food Code
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Food Name
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Price($)
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                                Action
+                                                                        </th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <tr class=""  id="data">
+                                                                        <th scope="row" class="px-6 py-4 font-medium  ">
+                                                                                1
+                                                                        </th>
+                                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                                                DF001
+                                                                        </td>
+                                                                        <td class="px-6 py-4  whitespace-nowrap">
+                                                                                French Fries
+                                                                        </td>
+                                                                        <td class="px-6 py-4  whitespace-nowrap">
+                                                                                1.5
+                                                                        </td>
+                                                                        <td class="px-6 py-4 flex">
+                                                                                <a href="#"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                                                        </svg></a>
+                                                                                <a href="#"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                                        </svg></a>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr class=""  id="data">
+                                                                        <th scope="row" class="px-6 py-4 font-medium  ">
+                                                                                2
+                                                                        </th>
+                                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                                                DF002
+                                                                        </td>
+                                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                                                Sandwich
+                                                                        </td>
+                                                                        <td class="px-6 py-4  whitespace-nowrap">
+                                                                                1.8
+                                                                        </td>
+                                                                        <td class="px-6 py-4 flex ">
+                                                                                <a href="#"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                                                        </svg></a>
+                                                                                <a href="#"
+                                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke-width="1.5"
+                                                                                                stroke="currentColor"
+                                                                                                class="w-6 h-6">
+                                                                                                <path stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                                        </svg></a>
+                                                                        </td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                        <div class=" pl-5 bg-blue-100 w-full lg:w-full lg:h-screen xl:w-full xl:h-screen border-l border-black">
+                                                <h1 class="font-semibold text-center text-2xl">Food
+                                                        Information</h1>
+                                                        <div id="info"> 
+                                                                <div class=" items-center m-5 gap-[90px] ">
+                                                                        <img src="https://img.apmcdn.org/4b2716626c9ff3f6e5dfebe520eb592c33cf1e7b/uncropped/941f50-splendid-table-french-fries.jpg"
+                                                                        alt="cashier" width="70%">
+                                                                        <div class="text-lg grid grid-cols-2 pt-5">
+                                                                                <p>code: DF001 </p>
+                                                                                <P>Name: Franch</P>
+                                                                                <p>Category: Food</p>
+                                                                                <p>Prices: 1.5 </p>
+                                                                                <p>Order: 99 times</p>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                        </div>
+                                </div>
+                        </div> -->
+                </div>
+        </div>
+        
+
+        <script>
+                // function openpage(elmnt, pageName) {
+                //         var i, tabcontent, tab, right;
+                //         tabcontent = document.getElementsByClassName("tabcontent");
+                //         for (i = 0; i < tabcontent.length; i++) {
+                //                 tabcontent[i].style.display = "none";
+
+                //         }
+                //         tab = document.getElementsByClassName("tab");
+                //         for (i = 0; i < tab.length; i++) {
+                //                 tab[i].className = tab[i].className.replace("active");
+                //         }
+                //         document.getElementById(pageName).style.display = "block";
+                //         elmnt.currentTarget.className += "active";
+                // }
+                // document.getElementById("defaultOpen").click();
+
+                // const listdata = document.querySelector('#data');
+                // const Displaydata = document.querySelector('info');
+                // listdata.addEventListener("click",()=>{
+                //         if(Displaydata.style.display === 'none'){
+                //                 Displaydata.style.display = 'block';
+                //                 Displaydata.innerHTML = `
+                //                 <div class=" items-center m-5 gap-[90px] ">
+                //                                                         <img src="https://img.apmcdn.org/4b2716626c9ff3f6e5dfebe520eb592c33cf1e7b/uncropped/941f50-splendid-table-french-fries.jpg"
+                //                                                         alt="cashier" width="70%">
+                //                                                         <div class="text-lg grid grid-cols-2 pt-5">
+                //                                                                 <p>code: DF001 </p>
+                //                                                                 <P>Name: Franch</P>
+                //                                                                 <p>Category: Food</p>
+                //                                                                 <p>Prices: 1.5 </p>
+                //                                                                 <p>Order: 99 times</p>
+
+                //                                                         </div>
+                //                                                 </div>
+                                
+                //                 `;
+                //         }
+                //         else{
+                //                 Displaydata.style.display = 'none';
+                //         }
+                // })
+
+                //tabs
+                const cashierButton = document.getElementById('btn_cashier');
+                const drinkButton = document.getElementById('btn_drink');
+
+                cashierButton.style.cursor = "pointer";
+                drinkButton.style.cursor = "pointer";
+
+                //show each content on tab clicked
+                const cashierContent = document.getElementById('Cashier');
+                const drinkContent = document.getElementById('Drink');
+                
+                cashierButton.addEventListener("click", function() {
+                        cashierButton.style.background = "rgb(174, 174, 220)";
+                        drinkButton.style.background = "white";
+                        cashierContent.style.display = "block";
+                        drinkContent.style.display = "none";
+                })
+
+                drinkButton.addEventListener("click", function() {
+                        drinkButton.style.background = "rgb(174, 174, 220)";
+                        cashierButton.style.background = "white";
+                        cashierContent.style.display = "none";
+                        drinkContent.style.display = "block";
+                })
+
+                function changeBackground(id) {
+                        let colorBackgroundCashier = document.getElementById(id);
+                        colorBackgroundCashier.style.background = "#bdbbbb";
+                        colorBackgroundCashier.style.cursor = "pointer";
+                }
+                function defaultBackground(id) {
+                        let colorBackgroundCashier = document.getElementById(id);
+                        colorBackgroundCashier.style.background = "white";
+                }
+
+                function changeBackgroundDrink(id) {
+                        let colorBackgroundDrink = document.getElementById(id);
+                        colorBackgroundDrink.style.background = "#bdbbbb";
+                        colorBackgroundDrink.style.cursor = "pointer";
+                }
+                function defaultBackgroundDrink(id) {
+                        let colorBackgroundDrink = document.getElementById(id);
+                        colorBackgroundDrink.style.background = "white";
+                }
+                function showInfoCashier(firstName, lastName, gender, hiredDate, username, password, age, profile, loginDate) {
+                        const info = document.getElementById('infoCashier');
+
+                        let content = '';
+
+                        content = `
+                                <div class="flex items-center m-5 gap-[90px]">
+                                        <img src="data:image/jpeg;base64, ${profile}" alt="cashier" style="width: 50%; height: 350px;">
+                                        <div class="text-lg">
+                                                <p>Name: ${firstName} ${lastName} </p>
+                                                <P>Age: ${age} </P>
+                                                <p>Sex: ${gender} </p>
+                                                <p>Hired Day: ${hiredDate} </p>
+                                                <p>Served:12-06-2012</p>
+                                                <p>Login: ${username} </p>
+                                                <p>Password: ${password} </p>
+                                                <p>last login: ${loginDate} </p>
+                                        </div>
+                                </div>
+                                <div class="p-4 text-lg">
+                                        <p>Last Login: ${loginDate}</p>
+                                        <p>Last served:99</p>
+                                </div>
+                        `;
+                        info.innerHTML = content;
+                }
+                function showInfoDrink(code, name, cateName, price, note, picture) {
+                        const info = document.getElementById('infoDrink');
+
+                        let content = '';
+
+                        content = `<div class="flex items-center m-5 gap-[90px]">
+                                        <img src="data:image/jpeg;base64, ${picture}"
+                                                alt="cashier" style="width: 50%; height: 350px;">
+                                        <div class="text-lg">
+                                                <p>code: ${code} </p>
+                                                <P>Name: ${name}</P>
+                                                <p>Category: ${cateName}</p>
+                                                <p>Prices: ${price} </p>
+                                                <p>Order: 99 times</p>
+                                                <p>Note: ${note}.
+                                                </p>
+                                        </div>
+                                </div>
+                                <p class="p-8 text-lg">Last order:25-07-2015</p>`;
+                        
+                        info.innerHTML = content;
+
+                }
+
+
+        </script>
+</body>
+
+</html>

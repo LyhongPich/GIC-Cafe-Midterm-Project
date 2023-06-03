@@ -36,6 +36,7 @@
             width: 60%;
             background-color:gainsboro;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             border-top-right-radius: 50px;
@@ -65,20 +66,24 @@
             border-radius: 10px;
             cursor: pointer;
         }
+        .form button:hover {
+            background-color: rgb(166, 255, 225);
+        }
         
     </style>
 </head>
 <body>
-    <div th:if="${param.invalid}" class="">
-        <h4>Username or password invalid</h4>
-    </div>
+    
     <div class="content">
         <div class="left">
             <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-design-creative-idea-logo-elements-2.png" alt="">
         </div>
         <div class="right">
+            <div th:if="${param.invalid}" class="">
+                <h4>Username or password invalid</h4>
+            </div>
             <div class="form">
-                <form th:action="@{/login/user}" method="post">
+                <form th:action="@{/login}" method="post">
                     <label for="username">Username</label>
                     <br>
                     <input id="username" type="text" name="username" required><br>
@@ -91,38 +96,5 @@
         </div>
     </div>
 
-    <!-- <script>
-
-        let username = document.getElementById('username');
-        let password = document.getElementById('password');
-
-        function login() {
-            if(username.value == 'lyhong') {
-                if(password.value == '123bless') {
-                    location.href = '/tableSelect';
-                }
-                else if(password.value == '') {
-                    alert('Password required');
-                }
-                else{
-                    alert('Incorrect password');
-                }
-            }
-            else if(username.value != 'lyhong' && password.value != '123bless') {
-                alert('Invalid');
-            }
-            else{
-                if(username.value == '') {
-                    alert('Username required');
-                }
-                else if(password.value == '123bless') {
-                    alert('Username required');
-                }
-                else if(password.value == '') {
-                    alert('Password required');
-                }
-            }
-        }
-    </script> -->
 </body>
 </html>
