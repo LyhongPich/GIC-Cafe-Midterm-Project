@@ -72,6 +72,7 @@ public class UserServiceImp implements UserService {
                 addUser.setFirst_name(firstName);
                 addUser.setLast_name(lastName);
                 addUser.setGender(gender);
+                addUser.setOrder_serve(0);
 
                 int stateRole = 0;
                 int roleId = 0;
@@ -123,6 +124,7 @@ public class UserServiceImp implements UserService {
                 use.setPassword(u.getPassword());
                 use.setProfile(u.getProfile());
                 use.setLogin_date(u.getLogin_date());
+                use.setOrder_serve(u.getOrder_serve());
                 cashiers.add(use);
             }
         }

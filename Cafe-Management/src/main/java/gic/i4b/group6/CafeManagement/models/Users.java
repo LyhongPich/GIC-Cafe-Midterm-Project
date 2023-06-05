@@ -31,6 +31,7 @@ public class Users {
     private String password;
     private Date hired_date;
     private Date login_date;
+    private Integer order_serve;
 
     @Lob
     @Column(length = 1000000)
@@ -120,6 +121,14 @@ public class Users {
 
     public void setLogin_date(Date login_date) {
         this.login_date = login_date;
+    }
+
+    public Integer getOrder_serve() {
+        return order_serve;
+    }
+
+    public void setOrder_serve(Integer order_serve) {
+        this.order_serve = order_serve;
     }
 
     public boolean hasRole(String roleName){

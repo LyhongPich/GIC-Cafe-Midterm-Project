@@ -1,0 +1,168 @@
+<HTML>
+<HEAD>
+<TITLE>Calculate order dialog</TITLE>
+<style type="text/css">
+
+	.style1 {	
+	
+		border: solid rgb(95, 179, 235) 0px;
+		width: 30%;
+		border-radius: 5px;
+		margin: 5px auto;
+		background: rgb(170, 193, 206);
+	
+	}
+	.style2 {
+	
+		border: solid rgb(20, 111, 196) 10px;
+		width: 90%;
+		border-radius: 5px;
+		margin: 5px auto;
+		background: rgb(170, 193, 206);
+		
+	}
+	
+	.btn {
+	  width: 202px;
+	  height: 30px;
+	  padding: 5px;
+	  background: rgb(20, 111, 196);
+	  font-size:20px;
+	  color: white;
+	}
+	.cbtn{
+		width:50px; 
+		height:40px; 
+		font-size:25; 
+		border-radius:8px
+		
+	}
+</style>
+
+</HEAD>
+
+<BODY bgcolor="#FFF">
+<center><img src="">
+<B><font color="white" style ="font-size:50" > Calculate order dialog </font></B>
+</center>
+<div>
+<table class="style1" border="4">
+<tr>
+<td>
+<table class="style1" width="700px">
+	<tr>
+	    <td style="width: 250px">Tax:</td>
+			
+				<td><input type="text" name = "tax" style="width: 212px" 
+					value="0.00" onfocus="this.value=''">			
+			
+			
+			</td>
+		</tr>
+		
+		<tr>
+		<td>Subtotal:</td>       
+			
+			<td><input type="text" name = "total" style="width: 212px" 
+					value="0.00" onfocus="this.value=''">		
+			</td>
+			
+		</tr>
+		
+		<tr>
+		
+		<td>Total:</td>
+				
+			<td><input type="text" name = "change" style="width: 212px" 
+					value="0.00" onfocus="this.value=''">		
+			
+			
+			</td>				
+		
+		</tr>
+		
+		<tr>
+		
+		<td>&nbsp;</td><td align="left" style="width: 400px">
+			<input type="submit" value="Total Cost" name = 'add' class='btn'></td>	
+			
+		</tr>
+</table>
+</form>
+</td>
+<!--==================================================================================================================-->
+
+
+
+
+
+<!--=====================Calcualtor=============================================================-->
+
+<td>
+<form name ="Calculator"  class="style2"> 
+<input name ="display" placeholder = "0" style ="width:212px; height:40px; text-align:right; font-size:30; 
+border-radius:8px; margin:3px"/>
+<br>
+<input type ="button"  value="7" onClick ="document.Calculator.display.value +='7'" class='cbtn' color: white;/> 
+<input type ="button"  value="8" onClick ="document.Calculator.display.value +='8'" class='cbtn'/>
+<input type ="button"  value="9" onClick ="document.Calculator.display.value +='9'" class='cbtn'/>
+<input type ="button"  value="+" onClick ="btnplus()" class='cbtn'/>
+<br>
+<input type ="button"  value="4" onClick ="document.Calculator.display.value +='4'" class='cbtn'/>
+<input type ="button"  value="5" onClick ="document.Calculator.display.value +='5'" class='cbtn'/>
+<input type ="button"  value="6" onClick ="document.Calculator.display.value +='6'" class='cbtn'/>
+<input type ="button"  value="-" onClick ="btnsub()" class='cbtn'/>
+<br>
+<input type ="button"  value="1" onClick ="document.Calculator.display.value +='1'" class='cbtn'/>
+<input type ="button"  value="2" onClick ="document.Calculator.display.value +='2'" class='cbtn'/>
+<input type ="button"  value="3" onClick ="document.Calculator.display.value +='3'" class='cbtn'/>
+<input type ="button"  value="*" onClick ="btnmult()" class='cbtn'/>
+<br>
+<input type ="button"  value="0" onClick ="document.Calculator.display.value +='0'" class='cbtn'/>
+<input type ="button"  value="%" onClick ="btnMod()" class='cbtn'/>
+<input type ="button"  value="." onClick ="btndot()" class='cbtn'/>
+<input type ="button"  value="/" onClick ="btndiv()" class='cbtn'/>
+<br>
+<input type ="button"  value="=" onClick ="document.Calculator.display.value = eval(document.Calculator.display.value)"
+ style ="width:101px; height:40px; font-size:30; border-radius:8px ; margin:3px"/>
+<input type ="button"  value="C" onClick ="btnclear()" style ="width:101px; height:40px; font-size:30; border-radius:8px "/>
+
+</form></td>
+
+</tr>
+
+</table></div>
+
+<SCRIPT>
+
+function btnplus()
+{	document.Calculator.display.value +="+";
+document.Calculator.display.style.textAlign="right";}
+function btnsub()
+{	document.Calculator.display.value +="-";
+document.Calculator.display.style.textAlign="right";}
+function btnmult()
+{	document.Calculator.display.value +="*";
+document.Calculator.display.style.textAlign="right";}
+function btnMod()
+{	document.Calculator.display.value +="%";
+document.Calculator.display.style.textAlign="right";}
+function btndot()
+{	document.Calculator.display.value +=".";
+document.Calculator.display.style.textAlign="right";}
+function btndiv()
+{	document.Calculator.display.value +="/";
+document.Calculator.display.style.textAlign="right";}
+function btnclear()
+{	document.Calculator.display.value ="";
+document.Calculator.display.style.textAlign="right";}
+
+</SCRIPT> 
+
+<!--==============================================================================================-->
+</td>
+</tr>
+</table>
+
+</BODY>
+</HTML>

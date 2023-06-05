@@ -138,7 +138,6 @@
                                                 </div>
                                         </button>
                                         <div class="dropdown-content">
-                                                <a href="#">About</a>
                                                 <a href="/login">
                                                         <div class="flex ">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15%"
@@ -168,7 +167,7 @@
                                 <a href="/admin/addCategory">
                                         <li class="list border-r border-black text-center p-1 rounded-lg">New Category</li>
                                 </a>
-                                <a href="#Order History">
+                                <a href="/admin/history">
                                         <li class="list border-r border-black text-center p-1 rounded-lg">Order History</li>
                                 </a>
                                 <a href="/admin/tableManagement">
@@ -216,16 +215,10 @@
                                                                         th:id="${cashier.getId()}"
                                                                         th:onmouseover="changeBackground([[${cashier.getId()}]])"
                                                                         th:onmouseout="defaultBackground([[${cashier.getId()}]])"
-                                                                        th:onclick="showInfoCashier([[${cashier.getFirst_name()}]] , [[${cashier.getLast_name()}]] , [[${cashier.getGender()}]] , [[${#dates.format(cashier.getHired_date(), 'dd/MM/yyyy')}]] , [[${cashier.getUsername()}]] , [[${#strings.repeat('*', cashier.getPassword().length())}]] , [[${age}]] , [[${cashier.getProfile()}]] , [[${#dates.format(cashier.getLogin_date(), 'dd/MM/yyyy hh:mm:ss')}]])">
-                                                                        <th th:text="${cashier.getId()-1}" scope="row" class="px-6 py-4 font-medium  ">
-                                                                                <!-- 1 -->
-                                                                        </th>
-                                                                        <td th:text="${cashier.getFirst_name()+' '+cashier.getLast_name()}" class="px-6 py-4 whitespace-nowrap">
-                                                                                <!-- Scheatdalin -->
-                                                                        </td>
-                                                                        <td th:text="${cashier.getUsername()}" class="px-6 py-4  whitespace-nowrap">
-                                                                                <!-- Dalin -->
-                                                                        </td>
+                                                                        th:onclick="showInfoCashier([[${cashier.getFirst_name()}]] , [[${cashier.getLast_name()}]] , [[${cashier.getGender()}]] , [[${#dates.format(cashier.getHired_date(), 'dd/MM/yyyy')}]] , [[${cashier.getUsername()}]] , [[${#strings.repeat('*', cashier.getPassword().length())}]] , [[${age}]] , [[${cashier.getProfile()}]] , [[${#dates.format(cashier.getLogin_date(), 'dd/MM/yyyy hh:mm:ss')}]] , [[${cashier.getOrder_serve()}]])">
+                                                                        <th th:text="${cashier.getId()-1}" scope="row" class="px-6 py-4 font-medium  "></th>
+                                                                        <td th:text="${cashier.getFirst_name()+' '+cashier.getLast_name()}" class="px-6 py-4 whitespace-nowrap"></td>
+                                                                        <td th:text="${cashier.getUsername()}" class="px-6 py-4  whitespace-nowrap"></td>
                                                                         <td class="px-6 py-4 flex ">
                                                                                 <a th:href="@{/admin/edit_cashier/{id} (id=${cashier.getId})}"
                                                                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
@@ -298,18 +291,10 @@
                                                                         th:onmouseover="changeBackgroundDrink([[${drink.getId()}]])"
                                                                         th:onmouseout="defaultBackgroundDrink([[${drink.getId()}]])"
                                                                         th:onclick="showInfoDrink([[${drink.getDrink_code()}]], [[${drink.getDrink_name()}]], [[${drink.getCategories.getCategory_name()}]], [[${drink.getPrices()}]], [[${drink.getNote()}]], [[${drink.getDrink_picture()}]])">
-                                                                        <th th:text="${drink.getId()}" scope="row" class="px-6 py-4 font-medium  ">
-                                                                                <!-- 1 -->
-                                                                        </th>
-                                                                        <td th:text="${drink.getDrink_code()}" class="px-6 py-4 whitespace-nowrap">
-                                                                                <!-- DH001 -->
-                                                                        </td>
-                                                                        <td th:text="${drink.getDrink_name()}" class="px-6 py-4  whitespace-nowrap">
-                                                                                <!-- Espresso -->
-                                                                        </td>
-                                                                        <td th:text="${drink.getPrices()}" class="px-6 py-4  whitespace-nowrap">
-                                                                                
-                                                                        </td>
+                                                                        <th th:text="${drink.getId()}" scope="row" class="px-6 py-4 font-medium  "></th>
+                                                                        <td th:text="${drink.getDrink_code()}" class="px-6 py-4 whitespace-nowrap"></td>
+                                                                        <td th:text="${drink.getDrink_name()}" class="px-6 py-4  whitespace-nowrap"></td>
+                                                                        <td th:text="'$'+${drink.getPrices()}" class="px-6 py-4  whitespace-nowrap"></td>
                                                                         <td class="px-6 py-4 flex">
                                                                                 <a th:href="@{/admin/edit_drink/{id} (id=${drink.getId()})}"
                                                                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
@@ -570,31 +555,80 @@
                         let colorBackgroundDrink = document.getElementById(id);
                         colorBackgroundDrink.style.background = "white";
                 }
-                function showInfoCashier(firstName, lastName, gender, hiredDate, username, password, age, profile, loginDate) {
-                        const info = document.getElementById('infoCashier');
+                function showInfoCashier(firstName, lastName, gender, hiredDate, username, password, age, profile, loginDate, orderServe) {
 
+                        const info = document.getElementById('infoCashier');
                         let content = '';
 
-                        content = `
-                                <div class="flex items-center m-5 gap-[90px]">
-                                        <img src="data:image/jpeg;base64, ${profile}" alt="cashier" style="width: 50%; height: 350px;">
-                                        <div class="text-lg">
-                                                <p>Name: ${firstName} ${lastName} </p>
-                                                <P>Age: ${age} </P>
-                                                <p>Sex: ${gender} </p>
-                                                <p>Hired Day: ${hiredDate} </p>
-                                                <p>Served:12-06-2012</p>
-                                                <p>Login: ${username} </p>
-                                                <p>Password: ${password} </p>
-                                                <p>last login: ${loginDate} </p>
+
+                        if(orderServe == 0) {
+                                content = `
+                                        <div class="flex items-center m-5 gap-[90px]">
+                                                <img src="data:image/jpeg;base64, ${profile}" alt="cashier" style="width: 50%; height: 350px;">
+                                                <div class="text-lg">
+                                                        <p>Name: ${firstName} ${lastName} </p>
+                                                        <P>Age: ${age} </P>
+                                                        <p>Sex: ${gender} </p>
+                                                        <p>Hired Day: ${hiredDate} </p>
+                                                        <p>Served:${orderServe}</p>
+                                                        <p>Login: ${username} </p>
+                                                        <p>Password: ${password} </p>
+                                                        <p>last login: ${loginDate} </p>
+                                                </div>
                                         </div>
-                                </div>
-                                <div class="p-4 text-lg">
-                                        <p>Last Login: ${loginDate}</p>
-                                        <p>Last served:99</p>
-                                </div>
-                        `;
+                                        <div class="p-4 text-lg">
+                                                <p>Last Login: ${loginDate}</p>
+                                                <p>Last served: ${orderServe}</p>
+                                        </div>
+                                `;
+                        }
+
+                        else if(orderServe == 1) {
+
+                                content = `
+                                        <div class="flex items-center m-5 gap-[90px]">
+                                                <img src="data:image/jpeg;base64, ${profile}" alt="cashier" style="width: 50%; height: 350px;">
+                                                <div class="text-lg">
+                                                        <p>Name: ${firstName} ${lastName} </p>
+                                                        <P>Age: ${age} </P>
+                                                        <p>Sex: ${gender} </p>
+                                                        <p>Hired Day: ${hiredDate} </p>
+                                                        <p>Served:${orderServe} time</p>
+                                                        <p>Login: ${username} </p>
+                                                        <p>Password: ${password} </p>
+                                                        <p>last login: ${loginDate} </p>
+                                                </div>
+                                        </div>
+                                        <div class="p-4 text-lg">
+                                                <p>Last Login: ${loginDate}</p>
+                                                <p>Last served: ${orderServe} time</p>
+                                        </div>
+                                `;
+                        }
+                        else {
+                                content = `
+                                        <div class="flex items-center m-5 gap-[90px]">
+                                                <img src="data:image/jpeg;base64, ${profile}" alt="cashier" style="width: 50%; height: 350px;">
+                                                <div class="text-lg">
+                                                        <p>Name: ${firstName} ${lastName} </p>
+                                                        <P>Age: ${age} </P>
+                                                        <p>Sex: ${gender} </p>
+                                                        <p>Hired Day: ${hiredDate} </p>
+                                                        <p>Served: ${orderServe} times</p>
+                                                        <p>Login: ${username} </p>
+                                                        <p>Password: ${password} </p>
+                                                        <p>last login: ${loginDate} </p>
+                                                </div>
+                                        </div>
+                                        <div class="p-4 text-lg">
+                                                <p>Last Login: ${loginDate}</p>
+                                                <p>Last served: ${orderServe} times</p>
+                                        </div>
+                                `;
+                        }
                         info.innerHTML = content;
+
+                        
                 }
                 function showInfoDrink(code, name, cateName, price, note, picture) {
                         const info = document.getElementById('infoDrink');
@@ -608,7 +642,7 @@
                                                 <p>code: ${code} </p>
                                                 <P>Name: ${name}</P>
                                                 <p>Category: ${cateName}</p>
-                                                <p>Prices: ${price} </p>
+                                                <p>Prices: $${price} </p>
                                                 <p>Order: 99 times</p>
                                                 <p>Note: ${note}.
                                                 </p>

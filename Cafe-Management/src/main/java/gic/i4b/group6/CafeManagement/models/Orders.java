@@ -1,6 +1,6 @@
 package gic.i4b.group6.CafeManagement.models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -12,9 +12,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", uniqueConstraints = @UniqueConstraint(columnNames = {
+    "drink_id",
+    "size_id",
+    "addon_id",
+    "table_id"
+}))
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +42,8 @@ public class Orders {
     @JoinColumn(name = "table_id")
     private Tables tables;
 
-    private LocalDateTime local_date_time;
+    private Date local_date_time;
+    private Integer quantity;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<Invoices> invoices;
@@ -81,12 +88,20 @@ public class Orders {
         this.tables = tables;
     }
 
-    public LocalDateTime getLocalDateTime() {
+    public Date getLocalDateTime() {
         return local_date_time;
     }
 
-    public void setLocalDateTime(LocalDateTime local_date_time) {
+    public void setLocalDateTime(Date local_date_time) {
         this.local_date_time = local_date_time;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public List<Invoices> getInvoices() {
@@ -96,7 +111,5 @@ public class Orders {
     public void setInvoices(List<Invoices> invoices) {
         this.invoices = invoices;
     }
-
-    
 
 }

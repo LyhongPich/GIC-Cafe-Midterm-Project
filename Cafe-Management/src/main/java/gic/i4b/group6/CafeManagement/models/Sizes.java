@@ -12,14 +12,14 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "sizes", uniqueConstraints = @UniqueConstraint(columnNames = "price_name"))
+@Table(name = "sizes", uniqueConstraints = @UniqueConstraint(columnNames = "size_name"))
 public class Sizes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String price_size;
-    private String price_name;
+    private String size_price;
+    private String size_name;
 
     @OneToMany(mappedBy = "sizes", cascade = CascadeType.ALL)
     private List<Orders> orders;
@@ -32,21 +32,22 @@ public class Sizes {
         this.id = id;
     }
 
-    public String getPrice_size() {
-        return price_size;
+    public String getSize_price() {
+        return size_price;
     }
 
-    public void setPrice_size(String price_size) {
-        this.price_size = price_size;
+    public void setSize_price(String size_price) {
+        this.size_price = size_price;
     }
 
-    public String getPrice_name() {
-        return price_name;
+    public String getSize_name() {
+        return size_name;
     }
 
-    public void setPrice_name(String price_name) {
-        this.price_name = price_name;
+    public void setSize_name(String size_name) {
+        this.size_name = size_name;
     }
+    
 
     public List<Orders> getOrders() {
         return orders;
@@ -55,6 +56,8 @@ public class Sizes {
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
+
+    
 
     
 }
