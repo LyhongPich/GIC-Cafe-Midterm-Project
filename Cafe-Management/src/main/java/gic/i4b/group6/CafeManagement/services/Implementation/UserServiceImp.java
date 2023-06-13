@@ -12,9 +12,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import gic.i4b.group6.CafeManagement.models.Orders;
 import gic.i4b.group6.CafeManagement.models.Roles;
+import gic.i4b.group6.CafeManagement.models.Tables;
 import gic.i4b.group6.CafeManagement.models.Users;
+import gic.i4b.group6.CafeManagement.repositories.OrderRepository;
 import gic.i4b.group6.CafeManagement.repositories.RoleRepository;
+import gic.i4b.group6.CafeManagement.repositories.TableRepository;
 import gic.i4b.group6.CafeManagement.repositories.UserRepository;
 import gic.i4b.group6.CafeManagement.services.UserService;
 
@@ -23,10 +27,14 @@ public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private TableRepository tableRepository;
+    private OrderRepository orderRepository;
 
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, TableRepository tableRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.tableRepository = tableRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -220,5 +228,31 @@ public class UserServiceImp implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public void setOrderServe(Integer cashierId, Integer tableId) {
+        Tables table = tableRepository.findById(tableId).get();
+
+        List<Orders> orderList = orderRepository.findByTables(table);
+
+        Users user = userRepository.findById(cashierId).get();
+
+        if(user != null) {
+            if(user.getOrder_serve() == 0) {
+                user.setOrder_serve(orderList.size());
+            }
+            else{
+                user.setOrder_serve(orderList.size()+user.getOrder_serve());
+            }
+        }
+        userRepository.save(user);
+    }
+
+    @Override
+    public Integer getRecentOrderServe(Integer userId, Integer tableId) {
+        Users user = userRepository.findById(userId).get();
+
+        return user.getOrder_serve();
     }
 }

@@ -10,6 +10,7 @@ public interface TableService {
     void setUnavailibility(Integer tableId);
     void removeAllOrderByTableId(Integer tableId);
     Tables getTableById(Integer id);
+    Integer countOrderByTableId(Integer tableId);
     Long getTableNum();
     List<Tables> getAllTables();
 }

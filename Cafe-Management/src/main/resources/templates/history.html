@@ -14,15 +14,19 @@
         .wrapper{
             margin: auto;
             width: 60%;
-            height: 50vh;
+            height: auto;
             background-color: aquamarine;
             position: relative;
+            padding-bottom: 10px;
         }
         .header{
             width: 100%;
             background-color: rgb(168, 148, 148);
             padding: 10px 0;
             border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .header h2{
             margin-left: 20px;
@@ -76,20 +80,21 @@
             font-size: 15px;
         }
         .btn3{
-            position: absolute;
-            right: 30px;
-            bottom: 20px;
             width: 120px;
             height: 40px;
-            background-color: rgb(189, 145, 129);
+            background-color: rgb(224, 211, 206);
             color: #ffffff;
             font-size: 16px;
             font-weight: 600;
             border: 2px solid black;
+            margin-right: 20px;
+            border: none;
+            border-radius: 4px;
         }
         .btn3:hover{
             background-color: burlywood;
-            color: #222222;
+            color: #7676d8;
+            transition: 0.5s;
         }
     </style>
 </head>
@@ -97,6 +102,7 @@
     <div class="wrapper">
         <div class="header">
             <h2>Histories</h2>
+            <a href="/admin"><button type="button" class="btn3">OK</button></a>
         </div>
         <div class="container">
             <table width="100%">
@@ -117,17 +123,10 @@
                         <td th:text="'$'+${history.getPrice()}" ></td>
                         <td th:text="${#dates.format(history.getOrder_date(), 'dd/MM/yyyy hh:mm:ss')}" ></td>
                     </tr>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr> -->
                 </tbody>
             </table>
         </div>
-        <a href="/admin"><button type="button" class="btn3">OK</button></a>
+        
     </div>
 </body>
 </html>

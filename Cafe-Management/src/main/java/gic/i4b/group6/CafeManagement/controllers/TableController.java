@@ -63,6 +63,7 @@ public class TableController {
     public String manageTable(@RequestParam("tableNum") Integer tableNum) {
         if(tableNum > 5 && tableNum <= 100) {
             tableService.setTableNum(tableNum);
+            orderService.removeAllOrder();
             return "redirect:/admin/tableManagement";
         }
         return "redirect:/admin/tableManagement?invalid";

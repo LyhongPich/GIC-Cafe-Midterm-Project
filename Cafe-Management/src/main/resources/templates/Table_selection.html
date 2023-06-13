@@ -178,7 +178,7 @@
                     <button th:text="${table.getNumber()}" 
                         th:if="${table.getAvailability() == 0}"
                         th:onclick="tableInfo([[${table.getNumber()}]], [[${table.getAvailability()}]])"
-                        th:ondblclick="notAvailable([[${table.getNumber()}]], [[${table.getAvailability()}]])"
+                        th:ondblclick="makeAvailable([[${table.getId()}]], [[${cashier.getId()}]])"
                         class="box2">
                     </button>
                     <button th:text="${table.getNumber()}"
@@ -243,15 +243,6 @@
                 `;
             }
             title.innerHTML = content;
-        }
-
-        function notAvailable(tableNum , availability) {
-            if(availability == 0) {
-                alert(`The table number ${tableNum} is not available`);
-            }
-            else if(availability == 2) {
-                alert(`The table number ${tableNum} is serving`);
-            }
         }
 
         function orderProduct(tableId, cashierId) {

@@ -35,6 +35,7 @@ public class ReceiptController {
         invoiceService.setInvoice(tableId, cashierId);
         historyService.setHistory(tableId);
         tableService.setUnavailibility(tableId);
+        userService.setOrderServe(cashierId, tableId);
         return "redirect:/viewReceipt/cashier={cashierId}/table={tableId}/cash={money}/total={price}";
     }
 

@@ -10,7 +10,8 @@ public interface UserService {
     void setUser(String firstName, String lastName, String gender, String dob, String username, String password, MultipartFile profile);
     void editUser(Integer id, String firstName, String lastName, String gender, String dob, String username, String password, MultipartFile profile);
     void removeUser(Integer id);
-    // String verifyUser(String username, String password);
+    void setOrderServe(Integer userId, Integer tableId);
+    Integer getRecentOrderServe(Integer userId, Integer tableId);
     Users getAdmin();
     Users getCashierById(Integer id);
     List<Users> getAllUsers();

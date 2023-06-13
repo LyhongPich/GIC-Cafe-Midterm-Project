@@ -128,6 +128,14 @@ public class TableServiceImp implements TableService {
             orderRepository.delete(o);
         }
     }
+
+    @Override
+    public Integer countOrderByTableId(Integer tableId) {
+        Tables table = tableRepository.findById(tableId).get();
+
+        List<Orders> orderList = orderRepository.findByTables(table);
+        return orderList.size();
+    }
 }
 
 

@@ -247,7 +247,7 @@ public class OrderController {
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
         model.addAttribute("totalprice", orderService.checkoutView(tableId));
-        model.addAttribute("change", orderService.checkoutIfTaxExist(orderService.checkoutView(tableId), cash_in));
+        model.addAttribute("change", orderService.checkout(orderService.checkoutView(tableId), cash_in));
         model.addAttribute("cashIn", cash_in);
         return "Checkout";
     }
@@ -326,7 +326,7 @@ public class OrderController {
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
         model.addAttribute("totalprice", orderService.checkoutView(tableId));
-        model.addAttribute("change", orderService.checkoutIfTaxExist(orderService.checkoutView(tableId), cash_in));
+        model.addAttribute("change", orderService.checkout(orderService.checkoutView(tableId), cash_in));
         model.addAttribute("cashIn", cash_in);
         return "CheckoutCate"; 
     }

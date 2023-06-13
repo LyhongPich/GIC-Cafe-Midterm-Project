@@ -220,7 +220,7 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
-    public Float checkoutIfTaxExist(Float totalprice, Float cash) {
+    public Float checkout(Float totalprice, Float cash) {
         float change = 0;
         if(cash > totalprice) {
             change = cash - totalprice;
@@ -234,6 +234,21 @@ public class OrderServiceImp implements OrderService {
         List<Orders> orderList = orderRepository.findByTables(table);
 
         return orderList.get(0);
+    }
+
+    @Override
+    public void removeAllOrder() {
+        List<Orders> orderList = orderRepository.findAll();
+
+        for(Orders o : orderList) {
+            if(o != null) {
+                o.setAddons(null);
+                o.setDrinks(null);
+                o.setSizes(null);
+                o.setTables(null);
+                orderRepository.delete(o);
+            }
+        }
     }
 
 }

@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Drink Selection</title>
+        <title>Calculate</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
                 
@@ -98,10 +98,7 @@
                                 <h1 class="  text-4xl ">Cafe</h1>
                         </div>
                         <div class="flex items-center">
-                                <!-- <button class="box border w-20 mr-5 rounded-lg">Home</button>
-                                <button class="box border w-20 mr-5 rounded-lg">Order</button>
-                                <button class="box border w-20 mr-5 rounded-lg">Table</button>
-                                <button class="box border w-20 mr-5 rounded-lg">History</button> -->
+                                
                         </div>
                         <div class="flex items-center justify-end  ">
                                 <div class="dropdown ">
@@ -120,7 +117,6 @@
                                         <div class="dropdown-content">
                                                 <a class="cursor-pointer">
                                                         <div class="flex ">
-
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15%"
                                                                         fill="none" viewBox="0 0 24 24"
                                                                         strokeWidth={1.5} stroke="currentColor"
@@ -184,13 +180,13 @@
                                                 <tbody>
                                                         <tr  th:each="order : ${orders}" class="">
                                                                 <th th:text="${order.getId()}" scope="row" class="px-2 py-4 font-medium  ">
-                                                                        <!-- 1 -->
+                                                                        
                                                                 </th>
                                                                 <td th:text="${order.getDrinks().getDrink_name()}" class="px-5 py-4 whitespace-nowrap">
-                                                                        <!-- DF001 -->
+                                                                        
                                                                 </td>
                                                                 <td th:text="${order.getSizes().getSize_name()}" class="px-6 py-4  whitespace-nowrap">
-                                                                        <!-- French Fries -->
+                                                                        
                                                                 </td>
                                                                 <td class="px-6 py-4  whitespace-nowrap wrapper">
                                                                         <button class="plus">
@@ -210,7 +206,7 @@
                                                                         </button>
                                                                 </td>
                                                                 <td th:if="${order.getAddons() == null}" th:text="'$' + (${order.getTotal_price()})" class="px-6 py-4  whitespace-nowrap">
-                                                                        <!-- 1.5 -->
+                                                                        
                                                                 </td>
                                                                 <td th:unless="${order.getAddons() == null}" th:text="'$' + (${order.getTotal_price()})" class="px-6 py-4  whitespace-nowrap">
                                                                         
@@ -248,17 +244,17 @@
                                                                 
                                                                 <div class="bg-white w-[350px] h-[30px] flex items-center pl-[40px] rounded-[10px]">
                                                                         <label for="" class="mr-[20px]">Cash In:</label>
-                                                                        <input type="text" placeholder="$0.00" name="cashIn" class="bg-gray-200 rounded-[10px]" required>
+                                                                        <input type="text" placeholder="$0.00" name="cashIn" class=" pl-[10px] outline-none bg-gray-200 rounded-[10px]" required>
                                                                 </div>
                                                                 <br>
                                                                 <div class="bg-white w-[350px] h-[30px] flex items-center pl-[50px] rounded-[10px]">
                                                                         <label for="" class="pl-[8px] mr-[20px]">Total:</label>
-                                                                        <input type="text" placeholder="$0.00" th:value="'$'+${totalprice}" class="bg-gray-200 rounded-[10px]" disabled>
+                                                                        <input type="text" placeholder="$0.00" th:value="'$'+${totalprice}" class=" pl-[10px] bg-gray-200 rounded-[10px]" disabled>
                                                                 </div>
                                                                 <br>
-                                                                <div class="bg-white w-[350px] h-[30px] flex items-center justify-center rounded-[10px]">
+                                                                <div class="bg-white w-[350px] h-[30px] flex items-center pl-[38px] rounded-[10px]">
                                                                         <label for="" class="mr-[20px]">Change:</label>
-                                                                        <input type="text" placeholder="$0.00" class="bg-gray-200 rounded-[10px]" disabled>
+                                                                        <input type="text" placeholder="$0.00" class=" pl-[10px] bg-gray-200 rounded-[10px]" disabled>
                                                                 </div>
                                                                 <br>
                                                                 <div class=" w-[350px] h-[60px] flex items-center justify-evenly rounded-[10px] text-white font-bold">
