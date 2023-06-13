@@ -221,18 +221,4 @@ public class UserServiceImp implements UserService {
         }
         return null;
     }
-
-    // @Override
-    // public String verifyUser(String username, String password) {
-    //     List<Users> users = getAllUsers();
-    //     for(Users user : users) {
-    //         if(username.equals(user.getUsername()) && password.equals(user.getPassword())) {
-    //             if(user.getRoles().getRole().equals("Admin")) {
-    //                 return "Admin";
-    //             }
-    //             return "Cashier";
-    //         }
-    //     }
-    //     return "invalid";
-    // }  
 }

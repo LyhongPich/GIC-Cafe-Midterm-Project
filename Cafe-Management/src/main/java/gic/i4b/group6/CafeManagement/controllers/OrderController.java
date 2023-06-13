@@ -1,7 +1,5 @@
 package gic.i4b.group6.CafeManagement.controllers;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import gic.i4b.group6.CafeManagement.models.Addons;
-import gic.i4b.group6.CafeManagement.models.Drinks;
-import gic.i4b.group6.CafeManagement.models.Orders;
-import gic.i4b.group6.CafeManagement.models.Sizes;
-import gic.i4b.group6.CafeManagement.models.Tables;
 import gic.i4b.group6.CafeManagement.services.AddonService;
 import gic.i4b.group6.CafeManagement.services.CategoryService;
 import gic.i4b.group6.CafeManagement.services.DrinkService;
@@ -48,7 +41,7 @@ public class OrderController {
         this.sizeService = sizeService;
     }
 
-    @GetMapping("/drinkSelection/{tableId}/{cashierId}")
+    @GetMapping("/drinkSelection/table={tableId}/cashier={cashierId}")
     public String drinkView(@PathVariable("tableId") Integer tableId,
                          @PathVariable("cashierId") Integer cashierId,
                          Model model) {
@@ -57,29 +50,178 @@ public class OrderController {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("drinks", drinkService.getDrinks());
         model.addAttribute("orders", orderService.getAllOrder(tableId));
-        model.addAttribute("addons", addonService.getAllAddons());
+        model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
         return "Drink";
     }
 
-    @GetMapping("/drinkSelection/{tableId}/{cashierId}/{categoryId}")
-    public String drinkViewWithSelect(@PathVariable("tableId") Integer tableId,
+    @GetMapping("/increaseQuantity/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}")
+    public String increaseQuantity(@PathVariable("tableId") Integer tableId,
+                         @PathVariable("cashierId") Integer cashierId,
+                         @PathVariable("orderId") Integer orderId,
+                         @PathVariable("qtd") Integer quantity,
+                         Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        orderService.increaseQuantity(orderId, quantity);
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
+    }
+
+    @GetMapping("/decreaseQuantity/quantity{qtd}/order={orderId}/table={tableId}/cashier={cashierId}")
+    public String decreaseQuantity(@PathVariable("tableId") Integer tableId,
+                         @PathVariable("cashierId") Integer cashierId,
+                         @PathVariable("orderId") Integer orderId,
+                         @PathVariable("qtd") Integer quantity,
+                         Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        orderService.decreaseQuantity(orderId, quantity);    
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
+    }
+
+    @GetMapping("/drinkSelection/table={tableId}/cashier={cashierId}/category={categoryId}")
+    public String drinkViewWithCategorySelect(@PathVariable("tableId") Integer tableId,
                                     @PathVariable("cashierId") Integer cashierId,
                                     @PathVariable("categoryId") Integer categoryId,
                                     Model model) {
         model.addAttribute("table", tableService.getTableById(tableId));
         model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categorySelect", categoryService.getCategoryById(categoryId));
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
         model.addAttribute("orders", orderService.getAllOrder(tableId));
-        model.addAttribute("addons", addonService.getAllAddons());
+        model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
         return "Drink_Select";
     }
 
-    @GetMapping("drinkSelection/drink={drinkId}/table={tableId}/cashier={cashierId}")
-    public String drinkSelectToOrder(@PathVariable("drinkId") Integer drinkId,
+    @GetMapping("/increaseQuantityCate/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}/category={categoryId}")
+    public String increaseQuantityCateView(@PathVariable("tableId") Integer tableId,
+                                    @PathVariable("cashierId") Integer cashierId,
+                                    @PathVariable("categoryId") Integer categoryId,
+                                    @PathVariable("orderId") Integer orderId,
+                                    @PathVariable("qtd") Integer quantity,
+                                    Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categorySelect", categoryService.getCategoryById(categoryId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        orderService.increaseQuantity(orderId, quantity);
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}/category={categoryId}";
+    }
+
+    @GetMapping("/decreaseQuantityCate/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}/category={categoryId}")
+    public String decreaseQuantityCateView(@PathVariable("tableId") Integer tableId,
+                                    @PathVariable("cashierId") Integer cashierId,
+                                    @PathVariable("categoryId") Integer categoryId,
+                                    @PathVariable("orderId") Integer orderId,
+                                    @PathVariable("qtd") Integer quantity,
+                                    Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categorySelect", categoryService.getCategoryById(categoryId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        orderService.decreaseQuantity(orderId, quantity);
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}/category={categoryId}";
+    }
+
+    @GetMapping("/makeOrder/drink={drinkId}/table={tableId}/cashier={cashierId}")
+    public String drinkMakeOrder(@PathVariable("drinkId") Integer drinkId,
                                 @PathVariable("tableId") Integer tableId,
+                                @PathVariable("cashierId") Integer cashierId,
+                                Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("drinkSelect", drinkService.getDrinkById(drinkId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        return "Drink_Make_Order";
+    }
+
+    @GetMapping("/makeOrderByCategory/drink={drinkId}/table={tableId}/cashier={cashierId}/category={categoryId}")
+    public String drinkMakeOrderByCategorySelect(@PathVariable("drinkId") Integer drinkId,
+                                    @PathVariable("tableId") Integer tableId,
+                                    @PathVariable("cashierId") Integer cashierId,
+                                    @PathVariable("categoryId") Integer categoryId,
+                                    Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("drinkSelect", drinkService.getDrinkById(drinkId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        return "Drink_Select_Make_Order";
+    }
+
+    @PostMapping("/addOrder/drink={drinkId}/table={tableId}/cashier={cashierId}")
+    public String addOrder(@PathVariable("drinkId") Integer drinkId,
+                            @PathVariable("tableId") Integer tableId,
+                            @PathVariable("cashierId") Integer cashierId,
+                            @RequestParam(value="addCream", required = false) Integer addonId,
+                            @RequestParam("size") Integer sizeId) {
+        orderService.setOrder(drinkId, tableId, sizeId, addonId, 1);
+
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
+    }
+    @GetMapping("/editOrder/order={orderId}/drink={drinkId}/table={tableId}/cashier={cashierId}")
+    public String editOrder(@PathVariable("orderId") Integer orderId,
+                            @PathVariable("drinkId") Integer drinkId,
+                            @PathVariable("tableId") Integer tableId,
+                            @PathVariable("cashierId") Integer cashierId,
+                            Model model) {
+        model.addAttribute("orderObject", orderService.getOrderById(orderId));
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("drinkSelect", drinkService.getDrinkById(drinkId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        return "Drink_Edit_Order";
+    }
+
+    @PostMapping("/editOrder/order={orderId}/drink={drinkId}/table={tableId}/cashier={cashierId}")
+    public String updateOrder(@PathVariable("orderId") Integer orderId,
+                            @PathVariable("drinkId") Integer drinkId,
+                            @PathVariable("tableId") Integer tableId,
+                            @PathVariable("cashierId") Integer cashierId,
+                            @RequestParam(value="addCream", required = false) Integer addonId,
+                            @RequestParam("size") Integer sizeId) {
+        orderService.editOrder(orderId, drinkId, tableId, sizeId, addonId);
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
+    }
+    @GetMapping("/removeOrder/order={orderId}/table={tableId}/cashier={cashierId}")
+    public String removeOrder(@PathVariable("orderId") Integer orderId) {
+        orderService.removeOrder(orderId);
+        return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
+    }
+
+    @GetMapping("/checkout/table={tableId}/cashier={cashierId}")
+    public String checkoutView(@PathVariable("tableId") Integer tableId,
                                 @PathVariable("cashierId") Integer cashierId,
                                 Model model) {
         model.addAttribute("table", tableService.getTableById(tableId));
@@ -87,31 +229,106 @@ public class OrderController {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("drinks", drinkService.getDrinks());
         model.addAttribute("orders", orderService.getAllOrder(tableId));
-        model.addAttribute("addons", addonService.getAllAddons());
-        model.addAttribute("sizes", sizeService.getAllSize());             
-        return "Drink_Order_Select";
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        model.addAttribute("totalprice", orderService.checkoutView(tableId));
+        return "Calculate";
+    }
+    @GetMapping("/newCheckout/table={tableId}/cashier={cashierId}")
+    public String checkout(@PathVariable("tableId") Integer tableId,
+                            @PathVariable("cashierId") Integer cashierId,
+                            @RequestParam("cashIn") Float cash_in,
+                            Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        model.addAttribute("totalprice", orderService.checkoutView(tableId));
+        model.addAttribute("change", orderService.checkoutIfTaxExist(orderService.checkoutView(tableId), cash_in));
+        model.addAttribute("cashIn", cash_in);
+        return "Checkout";
     }
 
-    @PostMapping("/addOrder")
-    public String addOrder(@RequestParam("drinkId") Integer drinkId,
-                        @RequestParam("tableId") Integer tableId,
-                        @RequestParam("sizeSelected") Integer sizeId,
-                        @RequestParam("addonSelect") Integer addonId,
-                        @RequestParam("qtd") Integer qtd) {
-        Orders orders = new Orders();
-        Drinks drink = drinkService.getDrinkById(drinkId);
-        Tables table = tableService.getTableById(tableId);
-        Sizes size = sizeService.getSizeById(sizeId);
-        Addons addon = addonService.getAddonById(addonId);
+    @GetMapping("/drinkSelection/table={tableId}/cashier={cashierId}/checkout/cash={money}/total={price}/change={ch}")
+    public String returnToDrinkAfterCheckout(@PathVariable("tableId") Integer tableId,
+                         @PathVariable("cashierId") Integer cashierId,
+                         @PathVariable("money") Float cash,
+                         @PathVariable("price") Float totalprice,
+                         @PathVariable("ch") Float change,
+                         Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getDrinks());
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        model.addAttribute("cashInput", cash);
+        model.addAttribute("priceTotal", totalprice);
+        model.addAttribute("change", change);
+        return "Drink";
+    }
 
-        orders.setAddons(addon);
-        orders.setDrinks(drink);
-        orders.setSizes(size);
-        orders.setTables(table);
-        orders.setQuantity(qtd);
-        orders.setLocalDateTime(new Date());
+    @GetMapping("/drinkSelection/table={tableId}/cashier={cashierId}/category={categoryId}/checkout/cash={money}/total={price}/change={ch}")
+    public String returnToDrinkCateAfterCheckout(@PathVariable("tableId") Integer tableId,
+                         @PathVariable("cashierId") Integer cashierId,
+                         @PathVariable("categoryId") Integer categoryId,
+                         @PathVariable("money") Float cash,
+                         @PathVariable("price") Float totalprice,
+                         @PathVariable("ch") Float change,
+                         Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categorySelect", categoryService.getCategoryById(categoryId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        model.addAttribute("cashInput", cash);
+        model.addAttribute("priceTotal", totalprice);
+        model.addAttribute("change", change);
+        return "Drink_Select";
+    }
 
-        return "redirect:/drinkSelection/{tableId}/{cashierId}";
+    @GetMapping("/checkoutInCategory/table={tableId}/cashier={cashierId}/category={categoryId}")
+    public String checkoutViewCate(@PathVariable("tableId") Integer tableId,
+                                    @PathVariable("cashierId") Integer cashierId,
+                                    @PathVariable("categoryId") Integer categoryId,
+                                    Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categorySelect", categoryService.getCategoryById(categoryId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        model.addAttribute("totalprice", orderService.checkoutView(tableId));
+        return "CalculateCate";
+    }
+
+    @GetMapping("/newCheckoutCate/table={tableId}/cashier={cashierId}/category={categoryId}")
+    public String checkoutCate(@PathVariable("tableId") Integer tableId,
+                            @PathVariable("cashierId") Integer cashierId,
+                            @PathVariable("categoryId") Integer categoryId,
+                            @RequestParam("cashIn") Float cash_in,
+                            Model model) {
+        model.addAttribute("table", tableService.getTableById(tableId));
+        model.addAttribute("cashier", userService.getCashierById(cashierId));
+        model.addAttribute("categorySelect", categoryService.getCategoryById(categoryId));
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("drinks", drinkService.getAllDrinksByCategoryId(categoryId));
+        model.addAttribute("orders", orderService.getAllOrder(tableId));
+        model.addAttribute("addon", addonService.getAddonById(1));
+        model.addAttribute("sizes", sizeService.getAllSize());
+        model.addAttribute("totalprice", orderService.checkoutView(tableId));
+        model.addAttribute("change", orderService.checkoutIfTaxExist(orderService.checkoutView(tableId), cash_in));
+        model.addAttribute("cashIn", cash_in);
+        return "CheckoutCate"; 
     }
     
 }

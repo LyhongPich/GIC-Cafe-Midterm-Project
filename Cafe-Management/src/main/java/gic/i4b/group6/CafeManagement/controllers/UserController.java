@@ -80,16 +80,4 @@ public class UserController {
     public String login() {
         return "Login";
     }
-
-    // @PostMapping("/login/user")
-    // public String loginCheck(@RequestParam("username") String username, @RequestParam("password") String password) {
-    //     String output = userService.verifyUser(username, password);
-    //     if(output.equals("Admin")) {
-    //         return "redirect:/admin";
-    //     }
-    //     else if(output.equals("Cashier")) {
-    //         return "redirect:/tableSelection";
-    //     }
-    //     return "redirect:/login?invalid";
-    // }
 }

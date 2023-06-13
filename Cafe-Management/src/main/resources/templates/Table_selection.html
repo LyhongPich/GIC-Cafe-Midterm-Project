@@ -181,10 +181,10 @@
                         th:ondblclick="notAvailable([[${table.getNumber()}]], [[${table.getAvailability()}]])"
                         class="box2">
                     </button>
-                    <button th:text="${table.getNumber()}" 
+                    <button th:text="${table.getNumber()}"
                         th:if="${table.getAvailability() == 2}"
                         th:onclick="tableInfo([[${table.getNumber()}]], [[${table.getAvailability()}]])"
-                        th:ondblclick="notAvailable([[${table.getNumber()}]], [[${table.getAvailability()}]])"
+                        th:ondblclick="makeAvailable([[${table.getId()}]], [[${cashier.getId()}]])"
                         class="box3">
                     </button>
                 </div>
@@ -199,6 +199,7 @@
         </div>
     </div>
     <script>
+
         const title = document.getElementById("sub-title");
         function hello(){
             title.innerHTML = `
@@ -218,22 +219,28 @@
                     <span>Table: ${tableNum}</span>
                     <br>
                     <span>Status: available</span>
-                    <br>
-                    <span>Orders: None</span>
                 </div>
             `;
             }
             else if(availability == 0) {
                 content = `
-                <h1>Table information</h1>
-                <div>
-                    <span>Table: ${tableNum}</span>
-                    <br>
-                    <span>Status: unavailable</span>
-                    <br>
-                    <span>Orders: None</span>
-                </div>
-            `;
+                    <h1>Table information</h1>
+                    <div>
+                        <span>Table: ${tableNum}</span>
+                        <br>
+                        <span>Status: unavailable</span>
+                    </div>
+                `;
+            }
+            else if(availability == 2) {
+                content = `
+                    <h1>Table information</h1>
+                    <div>
+                        <span>Table: ${tableNum}</span>
+                        <br>
+                        <span>Status: serving</span>
+                    </div>
+                `;
             }
             title.innerHTML = content;
         }
@@ -248,7 +255,11 @@
         }
 
         function orderProduct(tableId, cashierId) {
-            location.href = `/drinkSelection/${tableId}/${cashierId}`;
+            location.href = `/drinkSelection/table=${tableId}/cashier=${cashierId}`;
+        }
+
+        function makeAvailable(tableId, cashierId) {
+            location.href = `/tableSelection/makeAvailable/table=${tableId}/cashier=${cashierId}`;
         }
     </script>
 </body>

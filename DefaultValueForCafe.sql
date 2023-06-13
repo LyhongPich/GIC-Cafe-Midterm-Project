@@ -5,8 +5,7 @@ INSERT INTO roles (`role`) VALUES ("Admin"), ("Cashier");
 
 #Default addons
 INSERT INTO addons(`addon_name`,`addon_price`) VALUES 
-	("cream",0.5),
-	("bubble",0.75);
+	("cream",0.5);
 
 #Default sizes
 INSERT INTO sizes(`size_name`,`size_price`) VALUES 

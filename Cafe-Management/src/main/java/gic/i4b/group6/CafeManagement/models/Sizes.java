@@ -18,7 +18,7 @@ public class Sizes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String size_price;
+    private Float size_price;
     private String size_name;
 
     @OneToMany(mappedBy = "sizes", cascade = CascadeType.ALL)
@@ -32,11 +32,11 @@ public class Sizes {
         this.id = id;
     }
 
-    public String getSize_price() {
+    public Float getSize_price() {
         return size_price;
     }
 
-    public void setSize_price(String size_price) {
+    public void setSize_price(Float size_price) {
         this.size_price = size_price;
     }
 

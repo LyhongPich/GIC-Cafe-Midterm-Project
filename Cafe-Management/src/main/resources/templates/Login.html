@@ -79,9 +79,6 @@
             <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-design-creative-idea-logo-elements-2.png" alt="">
         </div>
         <div class="right">
-            <div th:if="${param.invalid}" class="">
-                <h4>Username or password invalid</h4>
-            </div>
             <div class="form">
                 <form th:action="@{/login}" method="post">
                     <label for="username">Username</label>

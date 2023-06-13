@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import gic.i4b.group6.CafeManagement.models.Orders;
 import gic.i4b.group6.CafeManagement.models.Tables;
+import gic.i4b.group6.CafeManagement.repositories.OrderRepository;
 import gic.i4b.group6.CafeManagement.repositories.TableRepository;
 import gic.i4b.group6.CafeManagement.services.TableService;
 
@@ -14,10 +16,12 @@ public class TableServiceImp implements TableService {
     
     private TableRepository tableRepository;
     private JdbcTemplate jdbcTemplate;
+    private OrderRepository orderRepository;
 
-    public TableServiceImp(TableRepository tableRepository, JdbcTemplate jdbcTemplate) {
+    public TableServiceImp(TableRepository tableRepository, JdbcTemplate jdbcTemplate, OrderRepository orderRepository) {
         this.tableRepository = tableRepository;
         this.jdbcTemplate = jdbcTemplate;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -78,4 +82,52 @@ public class TableServiceImp implements TableService {
     public Tables getTableById(Integer id) {
         return tableRepository.findById(id).get();
     }
+
+    @Override
+    public void setAvailability(Integer tableId) {
+        Tables table = tableRepository.findById(tableId).get();
+
+        table.setAvailability(1);
+        tableRepository.save(table);
+    }
+
+    @Override
+    public void setUnavailibility(Integer tableId) {
+        Tables table = tableRepository.findById(tableId).get();
+
+        table.setAvailability(2);
+        tableRepository.save(table);
+    }
+
+    @Override
+    public void removeAllOrderByTableId(Integer tableId) {
+        Tables table = tableRepository.findById(tableId).get();
+
+        List<Orders> orderList = orderRepository.findByTables(table);
+
+        for(Orders o : orderList) {
+            if(o.getAddons() == null) {
+                if(o != null && o.getDrinks() != null &&
+                    o.getSizes() != null && o.getTables() != null) {
+
+                    o.getDrinks().setOrders(null);
+                    o.getSizes().setOrders(null);
+                    o.getTables().setOrders(null);
+                }
+            }
+            else{
+                if(o != null && o.getDrinks() != null &&
+                    o.getSizes() != null && o.getTables() != null) {
+
+                    o.getAddons().setOrders(null);
+                    o.getDrinks().setOrders(null);
+                    o.getSizes().setOrders(null);
+                    o.getTables().setOrders(null);
+                }
+            }
+            orderRepository.delete(o);
+        }
+    }
 }
+
+

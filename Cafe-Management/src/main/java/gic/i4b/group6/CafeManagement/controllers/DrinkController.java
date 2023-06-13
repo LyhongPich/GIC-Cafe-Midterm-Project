@@ -21,7 +21,6 @@ public class DrinkController {
 
     @GetMapping("/admin/addNewDrink")
     public String addDrinkView(Model model) {
-        // model.addAttribute("drinks", drinkService.getDrinks());
         model.addAttribute("categories", drinkService.getCategories());
         return "New_drink";
     }

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        .wrapper{
+            width: 40%;
+            height: 100vh;
+            background-color: #d6d1d1;
+            margin: auto;
+        }
+        .header{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header h1{
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+        .header h4{
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        .table{
+            margin: 10px;
+        }
+        .table1 table{
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            white-space: nowrap;
+        }
+        .table1 table thead tr:nth-child(1) td{
+            width: 100%;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            padding: 16px 0;
+            border: 1px solid #b2bbb2;
+            border-left: none;
+            border-right: none;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .table1 table thead tr:nth-child(2) td{
+            width: 100%;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            padding: 6px 0;
+            border: 1px solid #b2bbb2;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            text-align: right;
+            padding-right: 20px;
+        }
+        .table1 table thead tr:nth-child(3) td{
+            width: 100%;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            padding: 6px 0;
+            border: 1px solid #b2bbb2;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            text-align: right;
+            padding-right: 20px;
+        }
+        .table3 table{
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            white-space: nowrap;
+        }
+        .table3 table tr td:nth-child(1){
+            width: 100%;
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 0;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .table3 table tr td:nth-child(2){
+            width: 100%;
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 0;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .table4 table{
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            white-space: nowrap;
+        }
+        table td:nth-child(1){
+            width: 100px;
+            text-align: center;
+        }
+        table td:nth-child(2){
+            width: 100px;
+            text-align: center;
+        }
+        table td:nth-child(3){
+            width: 100px;
+            text-align: center;
+        }
+        table td:nth-child(4){
+            width: 100px;
+            text-align: center;
+        }
+        .table4 table thead{
+            border: 1px solid #b2bbb2;
+            border-left: none;
+            border-right: none;
+        }
+        .table4 table thead td{
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            padding: 16px 0;
+        }
+        .table4 table tbody tr td{
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+        .table4 table tbody td{
+            font-size: 15px;
+        }
+        .table5{
+            display: flex;
+            justify-content: flex-end;
+        }
+        .table5 table{
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+        .table5 table thead tr td{
+            width: 75%;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 16px;
+            padding: 12px 0;
+            border: 1px solid #b2bbb2;
+            border-left: none;
+            border-right: none;
+        }
+        .table5 table tbody tr td{
+            border: 1px solid #b2bbb2;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            padding: 4px 0;
+            border-bottom: none;
+        }
+        .table5 table tbody tr:nth-child(2){
+            border-bottom: 1px solid #b2bbb2;
+        }
+        .footer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .footer h4{
+            margin: 0;
+        }
+        .footer h5{
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+        .footer h5:nth-child(3){
+            margin-bottom: 8px;
+        }
+        .footer-btn{
+            width: 40%;
+            height: 40px;
+            /* background-color: #a05959; */
+            margin: auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .footer-btn .btn{
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #222222;
+            width: 80px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid black; */
+            margin-left: 20px;
+            background-color: rgb(113, 204, 195);
+            /* margin-right: 10px; */
+        }
+        .footer-btn .btn:hover{
+            background-color: #8b7272;
+            color: #ffffff;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>GIC Café</h1>
+            <h4>Coffee and Bakery</h4>
+        </div>
+        <div class="table">
+            <div class="table1">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td th:text="'Invoice Number: '+${invoice.getId()}" ></td>
+                        </tr>
+                        <tr>
+                            <td>Brown 6 (Sothearos) | 098688221</td>
+                        </tr>
+                        <tr>
+                            <td>Browncoffee.com.kh</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table3">
+                <table width="100%">
+                    <tr>
+                        <td th:text="'Cashier: '+${cashier.getUsername()}" ></td>
+                        <td>Table number: <strong th:text="${table.getNumber()}" ></strong></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td th:text="'T-In: '+${#dates.format(firstOrder.getOrder_date(), 'dd/MM/yyyy hh:mm:ss')}" ></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table4">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Descrition</td>
+                            <td>Quantity</td>
+                            <td>Unit Price</td>
+                            <td>Amount</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${orders}" >
+                            <td th:text="${order.getDrinks().getDrink_name()}" ></td>
+                            <td th:if="${order.getSizes().getSize_name() == 'R'}" th:text="'Regular '+${order.getQuantity()}" ></td>
+                            <td th:if="${order.getSizes().getSize_name() == 'S'}" th:text="'Small '+${order.getQuantity()}" ></td>
+                            <td th:if="${order.getSizes().getSize_name() == 'L'}" th:text="'Large '+${order.getQuantity()}" ></td>
+                            <td th:text="'$'+${order.getDrinks().getPrices()}"></td>
+                            <td th:text="'$'+${order.getTotal_price()}" ></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table5">
+                <table width="90%">
+                    <thead>
+                        <tr>
+                            <td>Cash</td>
+                            <td th:text="'$'+${cash}" ></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Grand Total($)</td>
+                            <td th:text="'$'+${totalInUSA}" ></td>
+                        </tr>
+                        <tr>
+                            <td>Grand Total(R)</td>
+                            <td th:text="${totalInRiel}+'Riels'" ></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="footer">
+            <h4>Wifi Password: P@ssw0rd</h4>
+            <h5>Delivery Hotline: 023 215 215</h5>
+            <h5>Thank you for Coming</h5>
+        </div>
+    </div>
+    <div class="footer-btn">
+        <a class="btn" th:href="@{/tableSelection/table={tableId}/cashier={cashierId} (tableId=${table.getId()}, cashierId=${cashier.getId()})}">OK</a>
+    </div>
+</body>
+</html>

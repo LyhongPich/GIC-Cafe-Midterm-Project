@@ -6,23 +6,36 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "invoices")
+@Table(name = "invoices", uniqueConstraints = @UniqueConstraint(columnNames = {
+    "table_id",
+    "user_id"
+}))
 public class Invoices {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToOne
+    @JoinColumn(name = "table_id")
+    private Tables tables;
+
+    public Tables getTables() {
+        return tables;
+    }
+
+    public void setTables(Tables tables) {
+        this.tables = tables;
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Orders orders;
 
     public Integer getId() {
         return id;
@@ -40,13 +53,4 @@ public class Invoices {
         this.users = users;
     }
 
-    public Orders getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Orders orders) {
-        this.orders = orders;
-    }
-
-    
 }

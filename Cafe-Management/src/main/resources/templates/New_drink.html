@@ -186,7 +186,6 @@
                             <select name="cateName" id="">
                                 <option th:each="category : ${categories}" th:value="${category.getCategory_name()}" th:text="${category.getCategory_name()}"></option>
                             </select>
-                            <!-- <a class="add" onclick="addNew()">Add</a> -->
                         </div>
                         <label>Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
                         <input name="price" type="text" required><br><br>
@@ -208,30 +207,8 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="wrap" id="add_category">
-            <div class="header">
-                <h2>New Category</h2>
-            </div>
-            <div class="container1">
-                    <label>Category Code&nbsp;&nbsp;&nbsp;&nbsp;: </label>
-                    <input name="cateCode" type="text"><br><br>
-                    <label>Category Name&nbsp;&nbsp;&nbsp;: </label>
-                    <input name="cateName" type="text"><br><br>
-                    
-                    <input type="button" class="btn1" onclick="cancel()" value="OK">
-                    <input type="button" class="btn2" onclick="cancel()" value="Cancel">  
-            </div>
-        </div> -->
     </form>
     <script>
-        // const addCategory = document.getElementById('add_category');
-
-        // function addNew(){
-        //     addCategory.style.display="block";
-        // }
-        // function cancel(){
-        //     addCategory.style.display="none";
-        // }
         function loadFile(event) {
             let reader = new FileReader();
             reader.onload = function() {

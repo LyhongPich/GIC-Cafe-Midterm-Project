@@ -1,16 +1,13 @@
 package gic.i4b.group6.CafeManagement.models;
 
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -27,26 +24,41 @@ public class Orders {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "drink_id")
+    @JoinColumn(name = "drink_id", nullable = true)
     private Drinks drinks;
 
     @ManyToOne
-    @JoinColumn(name = "size_id")
+    @JoinColumn(name = "size_id", nullable = true)
     private Sizes sizes;
 
     @ManyToOne
-    @JoinColumn(name = "addon_id")
+    @JoinColumn(name = "addon_id", nullable = true)
     private Addons addons;
 
     @ManyToOne
-    @JoinColumn(name = "table_id")
+    @JoinColumn(name = "table_id", nullable = true)
     private Tables tables;
 
-    private Date local_date_time;
-    private Integer quantity;
+    private Date order_date;
+    
+    public Date getOrder_date() {
+        return order_date;
+    }
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    private List<Invoices> invoices;
+    public void setOrder_date(Date order_date) {
+        this.order_date = order_date;
+    }
+
+    private Integer quantity;
+    private Float total_price;
+
+    public Float getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Float total_price) {
+        this.total_price = total_price;
+    }
 
     public Integer getId() {
         return id;
@@ -88,28 +100,12 @@ public class Orders {
         this.tables = tables;
     }
 
-    public Date getLocalDateTime() {
-        return local_date_time;
-    }
-
-    public void setLocalDateTime(Date local_date_time) {
-        this.local_date_time = local_date_time;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public List<Invoices> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoices> invoices) {
-        this.invoices = invoices;
     }
 
 }

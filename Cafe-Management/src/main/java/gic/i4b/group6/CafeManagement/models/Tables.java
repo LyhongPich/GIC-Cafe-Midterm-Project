@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +20,9 @@ public class Tables {
     private Integer id;
     private Integer number;
     private Integer availability;
+
+    @OneToOne(mappedBy = "tables", cascade = CascadeType.ALL)
+    private Invoices invoices;
 
     @OneToMany(mappedBy = "tables", cascade = CascadeType.ALL)
     private List<Orders> orders;

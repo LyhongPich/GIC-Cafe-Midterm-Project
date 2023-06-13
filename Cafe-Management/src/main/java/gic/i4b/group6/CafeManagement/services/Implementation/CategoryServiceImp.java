@@ -60,5 +60,11 @@ public class CategoryServiceImp implements CategoryService {
             categoryRepository.save(categories);
         }
     }
+
+
+    @Override
+    public Categories getCategoryById(Integer categoryId) {
+        return categoryRepository.findById(categoryId).get();
+    }
     
 }
