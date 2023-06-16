@@ -12,13 +12,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import gic.i4b.group6.CafeManagement.models.Orders;
+import gic.i4b.group6.CafeManagement.models.Invoices;
 import gic.i4b.group6.CafeManagement.models.Roles;
-import gic.i4b.group6.CafeManagement.models.Tables;
 import gic.i4b.group6.CafeManagement.models.Users;
-import gic.i4b.group6.CafeManagement.repositories.OrderRepository;
+import gic.i4b.group6.CafeManagement.repositories.InvoiceRepository;
 import gic.i4b.group6.CafeManagement.repositories.RoleRepository;
-import gic.i4b.group6.CafeManagement.repositories.TableRepository;
 import gic.i4b.group6.CafeManagement.repositories.UserRepository;
 import gic.i4b.group6.CafeManagement.services.UserService;
 
@@ -27,14 +25,12 @@ public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private TableRepository tableRepository;
-    private OrderRepository orderRepository;
+    private InvoiceRepository invoiceRepository;
 
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, TableRepository tableRepository, OrderRepository orderRepository) {
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, InvoiceRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.tableRepository = tableRepository;
-        this.orderRepository = orderRepository;
+        this.invoiceRepository = orderRepository;
     }
 
     @Override
@@ -93,6 +89,18 @@ public class UserServiceImp implements UserService {
                 }
                 addUser.setUsername(username);
                 addUser.setPassword(password);
+
+                Calendar currentDate = Calendar.getInstance();
+                Calendar birthDate = Calendar.getInstance();
+
+                birthDate.setTime(addUser.getDate_of_birth());
+                int age = currentDate.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
+
+                if(currentDate.get(Calendar.MONTH) <= birthDate.get(Calendar.MONTH) && currentDate.get(Calendar.DAY_OF_MONTH) < birthDate.get(Calendar.DAY_OF_MONTH)) {
+                    age--;
+                }
+                addUser.setAge(age);
+
                 List<Roles> roles = roleRepository.findAll();
                 for(Roles role : roles) {
                     if(role.getRole().equals("Cashier")) {
@@ -133,6 +141,7 @@ public class UserServiceImp implements UserService {
                 use.setProfile(u.getProfile());
                 use.setLogin_date(u.getLogin_date());
                 use.setOrder_serve(u.getOrder_serve());
+                use.setAge(u.getAge());
                 cashiers.add(use);
             }
         }
@@ -232,27 +241,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void setOrderServe(Integer cashierId, Integer tableId) {
-        Tables table = tableRepository.findById(tableId).get();
-
-        List<Orders> orderList = orderRepository.findByTables(table);
-
+        // Tables table = tableRepository.findById(tableId).get();
         Users user = userRepository.findById(cashierId).get();
+        List<Invoices> invoiceList = invoiceRepository.findByUsers(user);
 
         if(user != null) {
-            if(user.getOrder_serve() == 0) {
-                user.setOrder_serve(orderList.size());
-            }
-            else{
-                user.setOrder_serve(orderList.size()+user.getOrder_serve());
-            }
+            user.setOrder_serve(invoiceList.size());
         }
         userRepository.save(user);
-    }
-
-    @Override
-    public Integer getRecentOrderServe(Integer userId, Integer tableId) {
-        Users user = userRepository.findById(userId).get();
-
-        return user.getOrder_serve();
     }
 }

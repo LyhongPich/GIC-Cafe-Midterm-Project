@@ -25,14 +25,6 @@ public class Invoices {
     @JoinColumn(name = "table_id")
     private Tables tables;
 
-    public Tables getTables() {
-        return tables;
-    }
-
-    public void setTables(Tables tables) {
-        this.tables = tables;
-    }
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
@@ -51,6 +43,14 @@ public class Invoices {
 
     public void setUsers(Users users) {
         this.users = users;
+    }
+
+    public Tables getTables() {
+        return tables;
+    }
+
+    public void setTables(Tables tables) {
+        this.tables = tables;
     }
 
 }

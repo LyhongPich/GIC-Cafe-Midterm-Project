@@ -156,21 +156,19 @@
                                         Choose Order</h1>
                                 <!-- all -->
                                 <div class="tabcontent" id="All">
-                                        <div class=" grid gap-x-5 gap-y-4  grid-cols-3  m-5">
+                                        <div class=" grid gap-x-5 gap-y-4  grid-cols-3  m-5 ">
                                                 <a th:each="drink : ${drinks}"
                                                         th:id="${drink.getId()}"
-                                                        th:href="@{/makeOrder/drink={drinkId}/table={tableId}/cashier={cashierId} (drinkId=${drink.getId()}, tableId=${table.getId()}, cashierId=${cashier.getId()})}"
+                                                        th:href="@{/makeOrderByCategory/drink={drinkId}/table={tableId}/cashier={cashierId}/category={categoryId} (drinkId=${drink.getId()}, tableId=${table.getId()}, cashierId=${cashier.getId()}, categoryId=${categorySelect.getId()})}"
                                                         class="relative border border-black w-48 h-36 p-5 object-center text-center rounded-[20px] md:w-28 lg:w-36 xl:w-56 xl:h-48 ">
-
                                                         <div class=" flex justify-center items-center">
                                                                 <img th:src="'data:image/jpeg;base64,'+ ${drink.getDrink_picture()}"
                                                                         alt="iced" class="md:w-4/5 lg:w-3/4 h-[115px]">
                                                         </div>
                                                         <div class="absolute inset-x-0 bottom-0">
-                                                                <h4 th:text="${drink.getDrink_name()}" ></h4>
-                                                                <h5 th:text="'$'+${drink.getPrices()}" ></h5>
+                                                                <h4 th:text="${drink.getDrink_name()}"></h4>
+                                                                <h5 th:text="'$'+${drink.getPrices()}"></h5>
                                                         </div>
-
                                                 </a>
                                         </div>
                                 </div>
@@ -193,7 +191,7 @@
                                                                 </td>
                                                                 <td class="px-6 py-4  whitespace-nowrap wrapper">
                                                                        
-                                                                        <a th:href="@{/increaseQuantity/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId} (qtd=${order.getQuantity}, orderId=${order.getId()}, tableId=${table.getId()}, cashierId=${cashier.getId()})}">
+                                                                        <a th:href="@{/increaseQuantityCate/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}/category={categoryId} (qtd=${order.getQuantity}, orderId=${order.getId()}, tableId=${table.getId()}, cashierId=${cashier.getId()}, categoryId=${categorySelect.getId()})}">
                                                                                 <button class="plus">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                                                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -203,7 +201,7 @@
                                                                                 </button>
                                                                         </a>
                                                                         <button class="num" th:text="${order.getQuantity()}"></button>
-                                                                        <a th:href="@{/decreaseQuantity/quantity{qtd}/order={orderId}/table={tableId}/cashier={cashierId} (qtd=${order.getQuantity}, orderId=${order.getId()}, tableId=${table.getId()}, cashierId=${cashier.getId()})}">
+                                                                        <a th:href="@{/decreaseQuantityCate/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}/category={categoryId} (qtd=${order.getQuantity}, orderId=${order.getId()}, tableId=${table.getId()}, cashierId=${cashier.getId()}, categoryId=${categorySelect.getId()})}">
                                                                                 <button class="minus ">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                                                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -252,28 +250,28 @@
                                         <div class="border-t border-black h-fit round-full p-3">
                                                 <div class="flex gap-[360px]">
                                                         <div class="">Cash</div>
-                                                        <div class="" th:if="${(cashInput != null) && (change != 0)}" th:text="'$'+${cashInput}"></div>
+                                                        <div class="" th:if="${(cashInput != null) && (change >= 0)}" th:text="'$'+${cashInput}"></div>
                                                 </div>
                                                
                                                 <div class="flex gap-[360px]">
                                                         <h4>Total </h4>
-                                                        <h4 th:if="${(priceTotal != null) && (change != 0)}" th:text="'$'+${priceTotal}"></h4>
+                                                        <h4 th:if="${(priceTotal != null) && (change >= 0)}" th:text="'$'+${priceTotal}"></h4>
                                                 </div>
                                         </div>
-                                        <div class="border-t border-black round-lg">
+                                        <div class=" border-t border-black round-lg">
                                                 <div class="flex gap-[340px] p-3">
                                                         <h4>Change</h4>
-                                                        <h4 th:if="${(change != null) && (change != 0)}" th:text="'$'+${change}"></h4>
+                                                        <h4 th:if="${(change != null) && (change >= 0)}" th:text="'$'+${change}"></h4>
                                                 </div>
                                                 
                                                 <div class="flex justify-end m-3">
-                                                        <a th:href="@{/checkout/table={tableId}/cashier={cashierId} (tableId=${table.getId()}, cashierId=${cashier.getId()})}">
+                                                        <a th:href="@{/checkoutInCategory/table={tableId}/cashier={cashierId}/category={categoryId} (tableId=${table.getId()}, cashierId=${cashier.getId()}, categoryId=${categorySelect.getId()})}">
                                                                 <button id="checkout" type="button"
                                                                         class="w-48 shadow bg-sky-500 hover:bg-sky-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg mx-2">
                                                                                 Total
                                                                 </button>
                                                         </a>
-                                                        <a th:if="${(cashInput != null) && (priceTotal != null) && (change != null) && (change != 0)}" th:href="@{/setReceipt/cashier={cashierId}/table={tableId}/cash={money}/total={price} (cashierId=${cashier.getId()}, tableId=${table.getId()}, money=${cashInput}, price=${priceTotal})}">
+                                                        <a th:if="${(cashInput != null) && (priceTotal != null) && (change != null) && (change >= 0)}" th:href="@{/setReceipt/cashier={cashierId}/table={tableId}/cash={money}/total={price} (cashierId=${cashier.getId()}, tableId=${table.getId()}, money=${cashInput}, price=${priceTotal})}">
                                                                 <button
                                                                         class="w-48 shadow bg-sky-500 hover:bg-sky-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg">
                                                                                 Print Receipt
@@ -286,7 +284,7 @@
                         </div>
                 </div>
         </div>
-
+        
         <script>
                 
         </script>

@@ -17,6 +17,6 @@ public class HistoryController {
     @GetMapping("/admin/history")
     public String historyView(Model model) {
         model.addAttribute("histories", historyService.getAllHistory());
-        return "history";
+        return "Admin/history";
     }
 }

@@ -1,5 +1,6 @@
 package gic.i4b.group6.CafeManagement.models;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -20,7 +21,7 @@ public class Addons {
     private Integer id;
 
     private String addon_name;
-    private Float addon_price;
+    private BigDecimal addon_price;
 
     @OneToMany(mappedBy = "addons", cascade = CascadeType.ALL)
     private List<Orders> orders;
@@ -41,11 +42,11 @@ public class Addons {
         this.addon_name = addon_name;
     }
 
-    public Float getAddon_price() {
+    public BigDecimal getAddon_price() {
         return addon_price;
     }
 
-    public void setAddon_price(Float addon_price) {
+    public void setAddon_price(BigDecimal addon_price) {
         this.addon_price = addon_price;
     }
 

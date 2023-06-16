@@ -1,4 +1,5 @@
 package gic.i4b.group6.CafeManagement.models;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ public class History {
 
     private Integer order_num;
     private Integer table_num;
-    private Float price;
+    private BigDecimal price;
     private Date order_date;
 
     public Integer getId() {
@@ -38,10 +39,10 @@ public class History {
     public void setTable_num(Integer table_num) {
         this.table_num = table_num;
     }
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
     public Date getOrder_date() {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Drink</title>
+    <title>Edit Drink Info</title>
 
     <style>
         *{
@@ -55,6 +55,7 @@
             border: 1px solid black;
             margin-left: 20px;
             background-color: rgb(113, 204, 195);
+            text-decoration: none;
         }
         label{
             font-size: 20px;
@@ -70,7 +71,7 @@
             padding-left: 10px;
         }
         select{
-            width: 350px;
+            width: 250px;
             height: 40px;
             margin-top: 10px;
             font-size: 18px;
@@ -170,28 +171,29 @@
     </style>
 </head>
 <body>
-    <form th:action="@{/admin/addNewDrink}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/admin/updateDrink/{id} (id=${drink.getId()})}" th:object="${drink}" method="post" enctype="multipart/form-data">
         <div class="wrapper">
             <div class="header">
-                <h2>New Drinks</h2>
+                <h2>Edit Drinks</h2>
             </div>
             <div class="container">
                 <div class="left-side">
                         <label>Drinks Code &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
-                        <input type="text" name="drinkCode" required><br><br>
+                        <input type="text" th:value="${drink.getDrink_code()}" name="drinkCode"><br><br>
                         <label>Drinks Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
-                        <input type="text" name="drinkName" required><br><br>
+                        <input type="text" th:value="${drink.getDrink_name()}" name="drinkName"><br><br>
                         <div class="hmm">
                             <label>Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</label>
                             <select name="cateName" id="">
                                 <option th:each="category : ${categories}" th:value="${category.getCategory_name()}" th:text="${category.getCategory_name()}"></option>
                             </select>
+                            <a class="add" th:href="@{/admin/addCategoryFromEdit/drink={id} (id=${drink.getId()})}">Add</a>
                         </div>
                         <label>Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
-                        <input name="price" type="text" required><br><br>
+                        <input name="price" th:value="${drink.getPrices()}" type="text"><br><br>
                         <div class="noted">
                             <label>Note &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
-                            <textarea name="note" rows="7" cols="32"></textarea>
+                            <textarea name="note" th:value="${drink.getNote()}" rows="7" cols="32"></textarea>
                         </div>
                         <button type="submit" class="btn1">OK</button>
                         <a href="/admin"><button type="button" class="btn2">Cancel</button></a>

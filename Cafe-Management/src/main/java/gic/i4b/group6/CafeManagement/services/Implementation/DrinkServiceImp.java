@@ -1,6 +1,8 @@
 package gic.i4b.group6.CafeManagement.services.Implementation;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -9,8 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import gic.i4b.group6.CafeManagement.models.Categories;
 import gic.i4b.group6.CafeManagement.models.Drinks;
+import gic.i4b.group6.CafeManagement.models.Orders;
 import gic.i4b.group6.CafeManagement.repositories.CategoryRepository;
 import gic.i4b.group6.CafeManagement.repositories.DrinkRepository;
+import gic.i4b.group6.CafeManagement.repositories.OrderRepository;
 import gic.i4b.group6.CafeManagement.services.DrinkService;
 
 @Service
@@ -18,10 +22,12 @@ public class DrinkServiceImp implements DrinkService {
 
     private DrinkRepository drinkRepository;
     private CategoryRepository categoryRepository;
+    private OrderRepository orderRepository;
 
-    public DrinkServiceImp(DrinkRepository drinkRepository, CategoryRepository categoryRepository) {
+    public DrinkServiceImp(DrinkRepository drinkRepository, CategoryRepository categoryRepository, OrderRepository orderRepository) {
         this.drinkRepository = drinkRepository;
         this.categoryRepository = categoryRepository;
+        this.orderRepository = orderRepository;
     }
 
 
@@ -31,7 +37,7 @@ public class DrinkServiceImp implements DrinkService {
     }
 
     @Override
-    public void setDrink(String dcode, String dname, String cName, Float price, String note, MultipartFile image) {
+    public void setDrink(String dcode, String dname, String cName, BigDecimal price, String note, MultipartFile image) {
 
         int state = 0;
         int cateId = 0;
@@ -98,7 +104,7 @@ public class DrinkServiceImp implements DrinkService {
 
 
     @Override
-    public void editDrink(Integer id, String dcode, String dname, String cName, Float price, String note,
+    public void editDrink(Integer id, String dcode, String dname, String cName, BigDecimal price, String note,
             MultipartFile image) {
                 
         int state = 0;
@@ -146,4 +152,22 @@ public class DrinkServiceImp implements DrinkService {
         drinkRepository.deleteById(id);
     }
 
+    @Override
+    public List<Integer> getNumberOfDrink() {
+        
+        List<Integer> count = new ArrayList<>();
+        List<Drinks> drinkList = drinkRepository.findAll();
+        for(Drinks drink : drinkList) {
+            int c = 0;
+            List<Orders> orderList = orderRepository.findByDrinks(drink);
+            for(Orders order : orderList) {
+                if(order != null) {
+                    c += order.getQuantity();
+                }
+            }
+            count.add(c);
+        }
+
+        return count;
+    }
 }

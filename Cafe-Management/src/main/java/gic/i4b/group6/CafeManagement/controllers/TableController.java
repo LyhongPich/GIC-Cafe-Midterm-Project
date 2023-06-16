@@ -32,7 +32,7 @@ public class TableController {
         model.addAttribute("cashier", userService.getCashierById(cashierId));
         model.addAttribute("tables", tableService.getAllTables());
         tableService.setUnavailibility(tableId);
-        return "Table_selection";
+        return "Cashier/Table_selection";
     }
     @GetMapping("/tableSelection/makeAvailable/table={tableId}/cashier={cashierId}")
     public String makeAvailableTable(@PathVariable("cashierId") Integer cashierId,
@@ -42,7 +42,7 @@ public class TableController {
         model.addAttribute("tables", tableService.getAllTables());
         tableService.setAvailability(tableId);
         tableService.removeAllOrderByTableId(tableId);
-        return "Table_selection";
+        return "Cashier/Table_selection";
     }
 
     @PostMapping("/tableSelection")
@@ -50,13 +50,13 @@ public class TableController {
         Integer cashierId = (Integer) request.getAttribute("cashierId");
         model.addAttribute("cashier", userService.getCashierById(cashierId));
         model.addAttribute("tables", tableService.getAllTables());
-        return "Table_selection";
+        return "Cashier/Table_selection";
     }
 
     @GetMapping("/admin/tableManagement")
     public String manageTableView(Model model) {
         model.addAttribute("tableCount", tableService.getTableNum());
-        return "Manage_table";
+        return "Admin/Manage_table";
     }
 
     @PostMapping("/admin/tableManagement")

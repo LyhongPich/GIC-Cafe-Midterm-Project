@@ -1,5 +1,6 @@
 package gic.i4b.group6.CafeManagement.services.Implementation;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -70,20 +71,20 @@ public class OrderServiceImp implements OrderService {
             Drinks drink = drinkRepository.findById(drinkId).get();
             Tables table = tableRepository.findById(tableId).get();
             Sizes size = sizeRepository.findById(sizeId).get();
-            float sum = 0;
+            BigDecimal sum = BigDecimal.ZERO;
 
             if(addonId != null) {
                 Addons addon = addonRepository.findById(addonId).get();
 
                 orders.setAddons(addon);
-                sum+=addon.getAddon_price();
+                sum = sum.add(addon.getAddon_price());
             }
 
             orders.setDrinks(drink);
             orders.setSizes(size);
             orders.setTables(table);
             orders.setQuantity(qtd);
-            orders.setTotal_price((drink.getPrices()*size.getSize_price())+sum);
+            orders.setTotal_price((drink.getPrices().multiply(size.getSize_price())).add(sum));
             orders.setOrder_date(new Date());
             
             orderRepository.save(orders);
@@ -122,19 +123,20 @@ public class OrderServiceImp implements OrderService {
 
         if(state == 0) {
             int sum = 0;
-            float total = 0;
+            BigDecimal sumBig = new BigDecimal(sum);
+            BigDecimal total = BigDecimal.ZERO;
             Orders orders = getOrderById(orderId);
             Sizes size = sizeRepository.findById(sizeId).get();
             if(addonId == null) {
-                sum+=0;
+                sumBig = sumBig.add(BigDecimal.ZERO);
                 orders.setAddons(null);
             }
             else{
                 Addons addon = addonRepository.findById(addonId).get();
-                sum+=orders.getAddons().getAddon_price();
+                sumBig = sumBig.add(orders.getAddons().getAddon_price());
                 orders.setAddons(addon);
             }
-            total = (size.getSize_price()*orders.getDrinks().getPrices())+sum;
+            total = (size.getSize_price().multiply(orders.getDrinks().getPrices())).add(sumBig);
             orders.setSizes(size);
             orders.setTotal_price(total);
             orderRepository.save(orders);
@@ -170,18 +172,21 @@ public class OrderServiceImp implements OrderService {
     public void increaseQuantity(Integer orderId, Integer qtd) {
         int inc = qtd+1;
         int sum = 0;
-        float totalPrice = 0;
+
+        BigDecimal increase = new BigDecimal(inc);
+        BigDecimal summation = new BigDecimal(sum);
+        BigDecimal totalPrice = BigDecimal.ZERO;
         Orders order = getOrderById(orderId); 
 
         if(order.getAddons() == null) {
-            sum+=0;
+            summation = summation.add(BigDecimal.ZERO);
         }
         else {
-            sum+=order.getAddons().getAddon_price();
+            summation = summation.add(order.getAddons().getAddon_price());
         }
-        totalPrice = (order.getSizes().getSize_price()*order.getDrinks().getPrices())+sum;
+        totalPrice = (order.getSizes().getSize_price().multiply(order.getDrinks().getPrices())).add(summation);
         order.setQuantity(inc);
-        order.setTotal_price(totalPrice*inc);
+        order.setTotal_price(totalPrice.multiply(increase));
         orderRepository.save(order);
     }
 
@@ -190,41 +195,42 @@ public class OrderServiceImp implements OrderService {
         if(qtd > 1) {
             int dec = qtd-1;
             int sum = 0;
-            float totalPrice = 0;
+
+            BigDecimal decrease = new BigDecimal(dec);
+            BigDecimal summation = new BigDecimal(sum);
+            BigDecimal totalPrice = BigDecimal.ZERO;
             Orders order = getOrderById(orderId); 
 
             if(order.getAddons() == null) {
-                sum+=0;
+                summation = summation.add(BigDecimal.ZERO);
             }
             else {
-                sum+=order.getAddons().getAddon_price();
+                summation = summation.add(order.getAddons().getAddon_price());
             }
-            totalPrice = (order.getSizes().getSize_price()*order.getDrinks().getPrices())+sum;
+            totalPrice = (order.getSizes().getSize_price().multiply(order.getDrinks().getPrices())).add(summation);
             order.setQuantity(dec);
-            order.setTotal_price(totalPrice*dec);
+            order.setTotal_price(totalPrice.multiply(decrease));
             orderRepository.save(order);
         }
     }
 
     @Override
-    public Float checkoutView(Integer tableId) {
+    public BigDecimal checkoutView(Integer tableId) {
         Tables table = tableRepository.findById(tableId).get();
-        float total = 0;
+        BigDecimal total = BigDecimal.ZERO;
 
         List<Orders> orders = orderRepository.findByTables(table);
         for(Orders o : orders) {
-            total += o.getTotal_price();
+            total = total.add(o.getTotal_price());
         }
 
         return total;
     }
 
     @Override
-    public Float checkout(Float totalprice, Float cash) {
-        float change = 0;
-        if(cash > totalprice) {
-            change = cash - totalprice;
-        } 
+    public BigDecimal checkout(BigDecimal totalprice, BigDecimal cash) {
+        BigDecimal change = cash.subtract(totalprice);
+        
         return change;
     }
 
@@ -249,6 +255,63 @@ public class OrderServiceImp implements OrderService {
                 orderRepository.delete(o);
             }
         }
+    }
+
+    @Override
+    public void setLastOrder(Integer drinkId) {
+        Drinks drink = drinkRepository.findById(drinkId).get();
+
+        List<Orders> orderList = orderRepository.findByDrinks(drink);
+
+        if(orderList.size() == 1) {
+            drink.setLast_order_date(orderList.get(0).getOrder_date());
+        }
+        else{
+            Orders lastOrder = orderList.get(0);
+
+            for(Orders o : orderList) {
+                if(o.getOrder_date().compareTo(lastOrder.getOrder_date()) > 0) {
+                    lastOrder = o;
+                }
+            }
+
+            drink.setLast_order_date(lastOrder.getOrder_date());
+        }
+        drinkRepository.save(drink);
+    }
+
+    @Override
+    public void removeLastOrder(Integer orderId) {
+        Orders order = orderRepository.findById(orderId).get();
+
+        Drinks drink = drinkRepository.findById(order.getDrinks().getId()).get();
+
+        List<Orders> orderList = orderRepository.findByDrinks(drink);
+
+        if(orderList.size() == 1) {
+            drink.setLast_order_date(null);
+        }
+        else{
+            Orders lastOrder = orderList.get(0);
+
+            for(Orders o : orderList) {
+                if(o.getOrder_date().compareTo(lastOrder.getOrder_date()) > 0) {
+                    lastOrder = o;
+                }
+            }
+            Orders secondLastOrder = null;
+
+            for(Orders o : orderList) {
+                if(o.getOrder_date().compareTo(drink.getLast_order_date()) > 0
+                    && (secondLastOrder == null || o.getOrder_date().compareTo(secondLastOrder.getOrder_date()) < 0)) {
+                        secondLastOrder = o;
+                }
+            }
+            if(secondLastOrder != null) {
+                drink.setLast_order_date(secondLastOrder.getOrder_date());
+            }
+        }
+        drinkRepository.save(drink);
     }
 
 }

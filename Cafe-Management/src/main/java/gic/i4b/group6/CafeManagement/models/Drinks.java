@@ -1,5 +1,7 @@
 package gic.i4b.group6.CafeManagement.models;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,9 +29,10 @@ public class Drinks {
     private Integer id;
     private String drink_code;
     private String drink_name;
-    private Float prices;
+    private BigDecimal prices;
     private String note;
-
+    private Date last_order_date;
+    
     @Lob
     @Column(length = 1000000)
     private String drink_picture;
@@ -65,11 +68,11 @@ public class Drinks {
         this.drink_name = drink_name;
     }
 
-    public Float getPrices() {
+    public BigDecimal getPrices() {
         return prices;
     }
 
-    public void setPrices(Float prices) {
+    public void setPrices(BigDecimal prices) {
         this.prices = prices;
     }
 
@@ -103,5 +106,13 @@ public class Drinks {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
+    }
+
+    public Date getLast_order_date() {
+        return last_order_date;
+    }
+
+    public void setLast_order_date(Date last_order_date) {
+        this.last_order_date = last_order_date;
     }
 }

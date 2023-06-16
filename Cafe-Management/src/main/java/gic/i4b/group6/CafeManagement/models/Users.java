@@ -32,6 +32,7 @@ public class Users {
     private Date hired_date;
     private Date login_date;
     private Integer order_serve;
+    private Integer age;
 
     @Lob
     @Column(length = 1000000)
@@ -141,6 +142,14 @@ public class Users {
 
     public void setRoles(Roles roles) {
         this.roles = roles;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public List<Invoices> getInvoices() {

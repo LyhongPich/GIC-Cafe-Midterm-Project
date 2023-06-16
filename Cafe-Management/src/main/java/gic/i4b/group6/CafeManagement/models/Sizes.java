@@ -1,5 +1,6 @@
 package gic.i4b.group6.CafeManagement.models;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -18,7 +19,7 @@ public class Sizes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Float size_price;
+    private BigDecimal size_price;
     private String size_name;
 
     @OneToMany(mappedBy = "sizes", cascade = CascadeType.ALL)
@@ -32,11 +33,11 @@ public class Sizes {
         this.id = id;
     }
 
-    public Float getSize_price() {
+    public BigDecimal getSize_price() {
         return size_price;
     }
 
-    public void setSize_price(Float size_price) {
+    public void setSize_price(BigDecimal size_price) {
         this.size_price = size_price;
     }
 
@@ -56,8 +57,4 @@ public class Sizes {
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
-
-    
-
-    
 }

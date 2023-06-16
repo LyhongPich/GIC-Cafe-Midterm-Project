@@ -1,5 +1,7 @@
 package gic.i4b.group6.CafeManagement.controllers;
 
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,8 @@ public class ReceiptController {
     @GetMapping("/setReceipt/cashier={cashierId}/table={tableId}/cash={money}/total={price}")
     public String setReceipt(@PathVariable("cashierId") Integer cashierId,
                                 @PathVariable("tableId") Integer tableId,
-                                @PathVariable("money") Float cash,
-                                @PathVariable("price") Float total) {
+                                @PathVariable("money") BigDecimal cash,
+                                @PathVariable("price") BigDecimal total) {
         invoiceService.setInvoice(tableId, cashierId);
         historyService.setHistory(tableId);
         tableService.setUnavailibility(tableId);
@@ -42,7 +44,7 @@ public class ReceiptController {
     @GetMapping("/viewReceipt/cashier={cashierId}/table={tableId}/cash={money}/total={price}")
     public String viewReceipt(@PathVariable("cashierId") Integer cashierId,
                                 @PathVariable("tableId") Integer tableId,
-                                @PathVariable("money") Float cash,
+                                @PathVariable("money") BigDecimal cash,
                                 @PathVariable("price") Float total,
                                 Model model) {
         model.addAttribute("cashier", userService.getCashierById(cashierId));
@@ -53,7 +55,7 @@ public class ReceiptController {
         model.addAttribute("cash", cash);
         model.addAttribute("totalInUSA", total);
         model.addAttribute("totalInRiel", Math.round(total)*4060);
-        return "receipt";
+        return "Cashier/receipt";
     }
     
 }

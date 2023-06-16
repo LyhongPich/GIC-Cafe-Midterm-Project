@@ -9,21 +9,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import gic.i4b.group6.CafeManagement.services.DrinkService;
+import gic.i4b.group6.CafeManagement.services.InvoiceService;
 import gic.i4b.group6.CafeManagement.services.UserService;
 
 @Controller
 public class UserController {
     private UserService userService;
     private DrinkService drinkService;
+    private InvoiceService invoiceService;
 
-    public UserController(UserService userService, DrinkService drinkService) {
+    public UserController(UserService userService, DrinkService drinkService, InvoiceService invoiceService) {
         this.userService = userService;
         this.drinkService = drinkService;
+        this.invoiceService = invoiceService;
     }
 
     @GetMapping("/admin/addCashier")
     public String addCashierView() {
-        return "New_cashier";
+        return "Admin/New_cashier";
     }
     
     @PostMapping("/admin/addCashier")
@@ -43,14 +46,15 @@ public class UserController {
         model.addAttribute("admin", userService.getAdmin());
         model.addAttribute("cashiers", userService.getAllCashier());
         model.addAttribute("drinks", drinkService.getDrinks());
-        model.addAttribute("ageList", userService.getAgeAllCashier());
-        return "admin";
+        model.addAttribute("invoiceNum", invoiceService.getLastInvoice());
+        model.addAttribute("orderNumList", drinkService.getNumberOfDrink());
+        return "Admin/admin";
     }
 
     @GetMapping("/admin/edit_cashier/{id}")
     public String editCashier(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("cashier", userService.getCashierById(id));
-        return "Edit_cashier";
+        return "Admin/Edit_cashier";
     }
 
     @PostMapping("/cashierUpdated/{id}")
@@ -68,7 +72,7 @@ public class UserController {
     @GetMapping("/admin/confirm_remove_cashier/{id}")
     public String cashierRemoveConfimation(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("cashier", userService.getCashierById(id));
-        return "Remove_Cashier_Confirm";
+        return "Admin/Remove_Cashier_Confirm";
     }
     @PostMapping("/admin/remove_cashier/{id}")
     public String cashierRemoved(@PathVariable("id") Integer id) {
@@ -78,6 +82,6 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "Login";
+        return "Login/Login";
     }
 }

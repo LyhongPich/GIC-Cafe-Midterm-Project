@@ -1,5 +1,7 @@
 package gic.i4b.group6.CafeManagement.controllers;
 
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +24,13 @@ public class DrinkController {
     @GetMapping("/admin/addNewDrink")
     public String addDrinkView(Model model) {
         model.addAttribute("categories", drinkService.getCategories());
-        return "New_drink";
+        return "Admin/New_drink";
     }
 
     @PostMapping("/admin/addNewDrink")
     public String addDrink(@RequestParam("drinkCode") String dcode, 
                         @RequestParam("drinkName") String dname,
-                        @RequestParam("price") Float price, 
+                        @RequestParam("price") BigDecimal price, 
                         @RequestParam("note") String note,
                         @RequestParam("cateName") String cName,
                         @RequestParam("file") MultipartFile image) {
@@ -40,14 +42,14 @@ public class DrinkController {
     public String editDrink(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("drink", drinkService.getDrinkById(id));
         model.addAttribute("categories", drinkService.getCategories());
-        return "Edit_drink";
+        return "Admin/Edit_drink";
     }
 
     @PostMapping("/admin/updateDrink/{id}")
     public String updatedDrink(@PathVariable("id") Integer id,
                                 @RequestParam("drinkCode") String dcode, 
                                 @RequestParam("drinkName") String dname,
-                                @RequestParam("price") Float price, 
+                                @RequestParam("price") BigDecimal price, 
                                 @RequestParam("note") String note,
                                 @RequestParam("cateName") String cName,
                                 @RequestParam("file") MultipartFile image){
@@ -58,7 +60,7 @@ public class DrinkController {
     @GetMapping("/admin/confirm_remove_drink/{id}")
     public String confirmRemoveDrink(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("drink", drinkService.getDrinkById(id));
-        return "Remove_Drink_Confirm";
+        return "Admin/Remove_Drink_Confirm";
     }
 
     @PostMapping("/admin/remove_drink/{id}")

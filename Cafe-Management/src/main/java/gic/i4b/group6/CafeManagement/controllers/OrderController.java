@@ -1,5 +1,7 @@
 package gic.i4b.group6.CafeManagement.controllers;
 
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +54,7 @@ public class OrderController {
         model.addAttribute("orders", orderService.getAllOrder(tableId));
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
-        return "Drink";
+        return "Cashier/Drink";
     }
 
     @GetMapping("/increaseQuantity/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}")
@@ -102,7 +104,7 @@ public class OrderController {
         model.addAttribute("orders", orderService.getAllOrder(tableId));
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
-        return "Drink_Select";
+        return "Cashier/Drink_Select";
     }
 
     @GetMapping("/increaseQuantityCate/quantity={qtd}/order={orderId}/table={tableId}/cashier={cashierId}/category={categoryId}")
@@ -156,7 +158,7 @@ public class OrderController {
         model.addAttribute("orders", orderService.getAllOrder(tableId));
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
-        return "Drink_Make_Order";
+        return "Cashier/Drink_Make_Order";
     }
 
     @GetMapping("/makeOrderByCategory/drink={drinkId}/table={tableId}/cashier={cashierId}/category={categoryId}")
@@ -173,7 +175,7 @@ public class OrderController {
         model.addAttribute("orders", orderService.getAllOrder(tableId));
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
-        return "Drink_Select_Make_Order";
+        return "Cashier/Drink_Select_Make_Order";
     }
 
     @PostMapping("/addOrder/drink={drinkId}/table={tableId}/cashier={cashierId}")
@@ -183,7 +185,7 @@ public class OrderController {
                             @RequestParam(value="addCream", required = false) Integer addonId,
                             @RequestParam("size") Integer sizeId) {
         orderService.setOrder(drinkId, tableId, sizeId, addonId, 1);
-
+        orderService.setLastOrder(drinkId);
         return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
     }
     @GetMapping("/editOrder/order={orderId}/drink={drinkId}/table={tableId}/cashier={cashierId}")
@@ -201,7 +203,7 @@ public class OrderController {
         model.addAttribute("orders", orderService.getAllOrder(tableId));
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
-        return "Drink_Edit_Order";
+        return "Cashier/Drink_Edit_Order";
     }
 
     @PostMapping("/editOrder/order={orderId}/drink={drinkId}/table={tableId}/cashier={cashierId}")
@@ -216,6 +218,7 @@ public class OrderController {
     }
     @GetMapping("/removeOrder/order={orderId}/table={tableId}/cashier={cashierId}")
     public String removeOrder(@PathVariable("orderId") Integer orderId) {
+        orderService.removeLastOrder(orderId);
         orderService.removeOrder(orderId);
         return "redirect:/drinkSelection/table={tableId}/cashier={cashierId}";
     }
@@ -232,12 +235,12 @@ public class OrderController {
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
         model.addAttribute("totalprice", orderService.checkoutView(tableId));
-        return "Calculate";
+        return "Cashier/Calculate";
     }
     @GetMapping("/newCheckout/table={tableId}/cashier={cashierId}")
     public String checkout(@PathVariable("tableId") Integer tableId,
                             @PathVariable("cashierId") Integer cashierId,
-                            @RequestParam("cashIn") Float cash_in,
+                            @RequestParam("cashIn") BigDecimal cash_in,
                             Model model) {
         model.addAttribute("table", tableService.getTableById(tableId));
         model.addAttribute("cashier", userService.getCashierById(cashierId));
@@ -249,15 +252,15 @@ public class OrderController {
         model.addAttribute("totalprice", orderService.checkoutView(tableId));
         model.addAttribute("change", orderService.checkout(orderService.checkoutView(tableId), cash_in));
         model.addAttribute("cashIn", cash_in);
-        return "Checkout";
+        return "Cashier/Checkout";
     }
 
     @GetMapping("/drinkSelection/table={tableId}/cashier={cashierId}/checkout/cash={money}/total={price}/change={ch}")
     public String returnToDrinkAfterCheckout(@PathVariable("tableId") Integer tableId,
                          @PathVariable("cashierId") Integer cashierId,
-                         @PathVariable("money") Float cash,
-                         @PathVariable("price") Float totalprice,
-                         @PathVariable("ch") Float change,
+                         @PathVariable("money") BigDecimal cash,
+                         @PathVariable("price") BigDecimal totalprice,
+                         @PathVariable("ch") BigDecimal change,
                          Model model) {
         model.addAttribute("table", tableService.getTableById(tableId));
         model.addAttribute("cashier", userService.getCashierById(cashierId));
@@ -269,16 +272,16 @@ public class OrderController {
         model.addAttribute("cashInput", cash);
         model.addAttribute("priceTotal", totalprice);
         model.addAttribute("change", change);
-        return "Drink";
+        return "Cashier/Drink";
     }
 
     @GetMapping("/drinkSelection/table={tableId}/cashier={cashierId}/category={categoryId}/checkout/cash={money}/total={price}/change={ch}")
     public String returnToDrinkCateAfterCheckout(@PathVariable("tableId") Integer tableId,
                          @PathVariable("cashierId") Integer cashierId,
                          @PathVariable("categoryId") Integer categoryId,
-                         @PathVariable("money") Float cash,
-                         @PathVariable("price") Float totalprice,
-                         @PathVariable("ch") Float change,
+                         @PathVariable("money") BigDecimal cash,
+                         @PathVariable("price") BigDecimal totalprice,
+                         @PathVariable("ch") BigDecimal change,
                          Model model) {
         model.addAttribute("table", tableService.getTableById(tableId));
         model.addAttribute("cashier", userService.getCashierById(cashierId));
@@ -291,7 +294,7 @@ public class OrderController {
         model.addAttribute("cashInput", cash);
         model.addAttribute("priceTotal", totalprice);
         model.addAttribute("change", change);
-        return "Drink_Select";
+        return "Cashier/Drink_Select";
     }
 
     @GetMapping("/checkoutInCategory/table={tableId}/cashier={cashierId}/category={categoryId}")
@@ -308,14 +311,14 @@ public class OrderController {
         model.addAttribute("addon", addonService.getAddonById(1));
         model.addAttribute("sizes", sizeService.getAllSize());
         model.addAttribute("totalprice", orderService.checkoutView(tableId));
-        return "CalculateCate";
+        return "Cashier/CalculateCate";
     }
 
     @GetMapping("/newCheckoutCate/table={tableId}/cashier={cashierId}/category={categoryId}")
     public String checkoutCate(@PathVariable("tableId") Integer tableId,
                             @PathVariable("cashierId") Integer cashierId,
                             @PathVariable("categoryId") Integer categoryId,
-                            @RequestParam("cashIn") Float cash_in,
+                            @RequestParam("cashIn") BigDecimal cash_in,
                             Model model) {
         model.addAttribute("table", tableService.getTableById(tableId));
         model.addAttribute("cashier", userService.getCashierById(cashierId));
@@ -328,7 +331,7 @@ public class OrderController {
         model.addAttribute("totalprice", orderService.checkoutView(tableId));
         model.addAttribute("change", orderService.checkout(orderService.checkoutView(tableId), cash_in));
         model.addAttribute("cashIn", cash_in);
-        return "CheckoutCate"; 
+        return "Cashier/CheckoutCate"; 
     }
     
 }

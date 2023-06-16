@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Category</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+                #output{
+                        width: 75px;
+                        height: 50px;
+                        cursor: pointer;
+                }
+        </style>
+</head>
+<body>
+        <form th:action="@{/admin/addCategoryFromDrink}" method="post" enctype="multipart/form-data" class="container border border-black w-fit absolute top-1/4 left-1/2 transform -translate-x-1/4 -translate-y-1/4 bg-gray-200 s text-lg">
+                <h1 class="m-2 pl-2 text-lg font-semibold">New Category</h1>
+                <div cal>
+                        <div class="m-3 pt-5 border-t border-black">
+                                <label for="code">Category code:</label>
+                                <input type="text" name="code" id="" class="input border border-black ml-5 pl-2">
+                        </div>
+                        <div class="m-3">
+                                <label for="text">Category name:</label>
+                                <input type="text" name="name" id="" class="input border border-black ml-4 pl-2">
+                        </div>
+                        <div class="m-3">
+                                <input id="file-input" type="file" name="file" onchange="loadFile(event)" hidden>
+                                <label for="file-input">
+                                        <img src="" id="output" class="mx-auto">
+                                        <h5>Click the photo to insert file</h5>
+                                </label>
+                        </div>
+                        <div class="button m-3 ">
+                                <button type="submit" class="w-48 shadow bg-sky-500 hover:bg-sky-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg" >OK</button>
+                                <a href="/admin/addNewDrink"><button type="button" class="w-48 shadow bg-sky-500 hover:bg-sky-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg" >Cancel</button></a>
+                        </div>
+                </div>
+        </form>
+        <script>
+                function loadFile(event) {
+                let reader = new FileReader();
+                reader.onload = function() {
+                        let file_input = document.getElementById('output');
+                        file_input.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+                };
+        </script>
+</body>
+</html>
