@@ -139,8 +139,16 @@
                                         Menu category</h1>
                                 <div  class="flex whitespace-nowrap overflow-auto scrollbar-hide md:scrollbar-default ">
                                         <div class="mt-5  flex justify-around gap-3">
-                                                <div th:each="category : ${categories}" class="menu p-2 border border-blue-500 rounded-[15px] w-24 h-16"
-                                                        id="tab">
+                                                <div class="menu p-2 border border-blue-500 rounded-[15px] w-24 h-16">
+                                                        <button class="">
+                                                                <div class="flex justify-center items-center">
+                                                                        <img src="https://cdn-icons-png.flaticon.com/512/3054/3054889.png"
+                                                                                width="30%" alt="">
+                                                                </div>
+                                                                <span>All</span>
+                                                        </button>
+                                                </div>
+                                                <div th:each="category : ${categories}" class="menu p-2 border border-blue-500 rounded-[15px] w-24 h-16">
                                                         <button class="">
                                                                 <div class="flex justify-center items-center">
                                                                         <img th:src="'data:image/jpeg;base64,'+ ${category.getPicture()}"
