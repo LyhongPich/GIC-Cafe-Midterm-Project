@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+
+
+    <style>
+        body{
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content{
+            width: 1020px;
+            height: 600px;
+            display: flex;
+        }
+        .left{
+            width: 40%;
+            background-color:honeydew;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+        }
+        .left img{
+            width: 200px;
+            height: 150px;
+        }
+        .right{
+            width: 60%;
+            background-color:gainsboro;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+        .form{
+            width: 370px;
+            height: 140px;
+            border: 1px solid black;
+            padding-top: 10px;
+            border-radius: 15px;
+        }
+        .form label{
+            padding-left: 12px;
+        }
+        .form input{
+            width: 350px;
+            margin-bottom: 10px;
+            margin-left: 6px;
+        }
+        .form button{
+            width: 75px;
+            height: 30px;
+            margin-top: 7px;
+            margin-left: 150px;
+            background-color: aquamarine;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .form button:hover {
+            background-color: rgb(166, 255, 225);
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="content">
+        <div class="left">
+            <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-design-creative-idea-logo-elements-2.png" alt="">
+        </div>
+        <div class="right">
+            <div class="form">
+                <form th:action="@{/login}" method="post">
+                    <label for="username">Username</label>
+                    <br>
+                    <input id="username" type="text" name="username" required><br>
+                    <label for="password">Password</label>
+                    <br>
+                    <input id="password" type="password" name="password" required><br>
+                    <button id="login" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Drink</title>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .wrapper{
+            margin: auto;
+            width: 80%;
+            height: 95vh;
+            background-color: aquamarine;
+        }
+        .header{
+            width: 100%;
+            background-color: rgb(168, 148, 148);
+            padding: 10px 0;
+            border: 1px solid black;
+        }
+        .header h2{
+            margin-left: 20px;
+        }
+        .container{
+            margin: 10px 10px;
+            /* background-color: rebeccapurple; */
+            display: flex;
+
+        }
+        .left-side{
+            /* background-color: red; */
+            width: 50%;
+            height: 100%;
+            margin-top: 20px;
+        }
+        .hmm{
+            display: flex;
+            align-items: baseline;
+        }
+        .add{
+            font-size: 16px;
+            font-weight: 600;
+            color: #222222;
+            width: 80px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            margin-left: 20px;
+            background-color: rgb(113, 204, 195);
+            text-decoration: none;
+        }
+        label{
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        input{
+            width: 350px;
+            height: 40px;
+            margin-top: 10px;
+            font-size: 18px;
+            outline: none;
+            padding-left: 10px;
+        }
+        select{
+            width: 250px;
+            height: 40px;
+            margin-top: 10px;
+            font-size: 18px;
+            outline: none;
+            padding-left: 10px;
+        }
+        button{
+            width: 100px;
+            height: 30px;
+            margin-top: 20px;
+        }
+        .btn1{
+            width: 300px;
+            height: 50px;
+            background-color: rgb(27, 124, 27);
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 400;
+            color: #ffffff;
+            border: none;
+        }
+        .btn1:hover{
+            background-color: rgb(98, 98, 161);
+            color: black;
+            font-weight: bold;
+        }
+        .btn2{
+            width: 200px;
+            height: 50px;
+            background-color: gray;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 400;
+            color: #ffffff;
+            border: none;
+        }
+        .btn2:hover{
+            background-color: burlywood;
+            color: black;
+            font-weight: bold;
+        }
+        .noted{
+            display: flex;
+            align-items: baseline;
+        }
+        textarea{
+            outline: none;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+        .right-side{
+            width: 50%;
+            height: 67vh;
+            /* background-color: red; */
+            background-color: #ffffff;
+            margin-top: 35px;
+        }
+        .right-side .right{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .right-side .right img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+        .right-side .right h5{
+            color: rgb(61, 61, 221);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wrap{
+            margin: auto;
+            width: 50%;
+            height: 50vh;
+            background-color: aquamarine;
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+        }
+        .container1{
+            margin: 20px 20px;
+            /* background-color: red; */
+        }
+        #output{
+            width: 300px;
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <form th:action="@{/admin/addNewDrink}" method="post" enctype="multipart/form-data">
+        <div class="wrapper">
+            <div class="header">
+                <h2>New Drinks</h2>
+            </div>
+            <div class="container">
+                <div class="left-side">
+                        <label>Drinks Code &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
+                        <input type="text" name="drinkCode" required><br><br>
+                        <label>Drinks Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
+                        <input type="text" name="drinkName" required><br><br>
+                        <div class="hmm">
+                            <label>Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</label>
+                            <select name="cateName" id="">
+                                <option th:each="category : ${categories}" th:value="${category.getCategory_name()}" th:text="${category.getCategory_name()}"></option>
+                            </select>
+                            <a class="add" href="/admin/addCategoryFromDrink">Add</a>
+                        </div>
+                        <label>Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
+                        <input name="price" type="text" required><br><br>
+                        <div class="noted">
+                            <label>Note &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </label>
+                            <textarea name="note" rows="7" cols="32"></textarea>
+                        </div>
+                        <button type="submit" class="btn1">OK</button>
+                        <a href="/admin"><button type="button" class="btn2">Cancel</button></a>
+                </div>
+                <div class="right-side">
+                    <div class="right">
+                        <input id="file-input" type="file" name="file" onchange="loadFile(event)" hidden>
+                        <label for="file-input">
+                            <img src="" id="output">
+                            <h5>Click the photo to insert file</h5>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function loadFile(event) {
+            let reader = new FileReader();
+            reader.onload = function() {
+                let file_input = document.getElementById('output');
+                file_input.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+    </script>
+</body>
+</html>

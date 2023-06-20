@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Checkout</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+                .menu:hover {
+                        background-color: rgb(152, 152, 228);
+                        border-radius: 15px;
+                }
+
+                .menu {
+                        margin: 5px;
+                }
+
+                .box:hover {
+                        background-color: grey;
+                }
+
+                body{
+                        overflow:hidden;
+                }
+                
+                .container{
+                        width:100vw;
+                        overflow: clip
+                        /* display: flex; */
+                }
+                .left{
+                width: 20%;
+                background-color: aquamarine;
+                float: left;
+                }
+                .right{
+                        width: 80%;
+                        background-color: rgb(203, 203, 133);
+                        float: right;
+                }
+                .box{
+                        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5); 
+                }
+                .dropbtn {
+                        /* background-color: rgb(59 130 246); */
+                        color: black;
+                        padding: 16px;
+                        font-size: 16px;
+                        border: none;
+                        width: 150px;
+                }
+
+                .dropdown {
+                        position: relative;
+                        display: inline-block;
+                }
+
+                .dropdown-content {
+                        display: none;
+                        position: absolute;
+                        background-color: #f1f1f1;
+                        min-width: 160px;
+                        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                        z-index: 1;
+                }
+
+                .dropdown-content a {
+                        color: black;
+                        padding: 12px 16px;
+                        text-decoration: none;
+                        display: block;
+                }
+
+                .dropdown-content a:hover {
+                        background-color: #ddd;
+                }
+
+                .dropdown:hover .dropdown-content {
+                        display: block;
+                }
+
+                .dropdown:hover .dropbtn {
+                        background-color: rgb(147 197 253);
+                }
+        </style>
+</head>
+
+<body class="overflow-auto">
+        <div class="w-full h-screen lg:w-screen xl:w-screen border border-black ">
+
+                <div class="grid grid-cols-3 bg-blue-100 ">
+                        <div class="flex items-center ">
+                                <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-design-creative-idea-logo-elements-2.png"
+                                        width="10%" alt="cafe" class="object-center md:w-28">
+                                <h1 class="  text-4xl ">Cafe</h1>
+                        </div>
+                        <div class="flex items-center">
+                                
+                        </div>
+                        <div class="flex items-center justify-end  ">
+                                <div class="dropdown ">
+                                        <button th:object="${cashier}" class="dropbtn flex rounded-full">
+                                                <img th:src="@{'data:image/jpeg;base64,' + ${cashier.getProfile()} }"
+                                                        width="30%" alt="cashier profile" class="pr-3 ">
+                                                <h1 th:text="${cashier.getUsername()}" ></h1>
+                                                <div class="flex items-center py-1 ">
+                                                        <svg class="fill-current h-4 w-5"
+                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                <path
+                                                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                                        </svg>
+                                                </div>
+                                        </button>
+                                        <div class="dropdown-content">
+                                                <a class="cursor-pointer">
+                                                        <div class="flex ">
+
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="15%"
+                                                                        fill="none" viewBox="0 0 24 24"
+                                                                        strokeWidth={1.5} stroke="currentColor"
+                                                                        className="w-6 h-6">
+                                                                        <path strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                                                                </svg> Log out
+                                                        </div>
+                                                </a>
+                                        </div>
+                                </div>
+                        </div>
+
+                </div>
+                <div class="grid grid-cols-2  h-screen bg-gray-200">
+                        <div class=" border-l border-r border-black h-screen overflow-y-auto">
+                                <h1 class="font-semibold text-2xl text-center mt-5 border-b border-black p-4">
+                                        Menu category</h1>
+                                <div  class="flex whitespace-nowrap overflow-auto scrollbar-hide md:scrollbar-default ">
+                                        <div class="mt-5  flex justify-around gap-3">
+                                                <div class="menu p-2 border border-blue-500 rounded-[15px] w-24 h-16">
+                                                        <button class="">
+                                                                <div class="flex justify-center items-center">
+                                                                        <img src="https://cdn-icons-png.flaticon.com/512/3054/3054889.png"
+                                                                                width="30%" alt="">
+                                                                </div>
+                                                                <span>All</span>
+                                                        </button>
+                                                </div>
+                                                <a th:each="category : ${categories}" class="menu p-2 border border-blue-500 rounded-[15px] w-24 h-16">
+                                                        <button class="">
+                                                                <div class="flex justify-center items-center">
+                                                                        <img th:src="'data:image/jpeg;base64,'+ ${category.getPicture()}"
+                                                                                width="30%" alt="">
+                                                                </div>
+                                                                <span th:text="${category.getCategory_name()}" ></span>
+                                                        </button>
+                                                </a>
+                                        </div>
+                                </div>
+
+                                <h1 class="font-semibold text-2xl pl-10 mt-5 border-b border-black m-5 p-5">
+                                        Choose Order</h1>
+                                <!-- all -->
+                                <div class="tabcontent" id="All">
+                                    <div class=" grid gap-x-5 gap-y-4  grid-cols-3  m-5 ">
+                                            <a th:each="drink : ${drinks}"
+                                                    th:id="${drink.getId()}"
+                                                    class="relative border border-black w-48 h-36 p-5 object-center text-center rounded-[20px] md:w-28 lg:w-36 xl:w-56 xl:h-48 ">
+                                                    <div class=" flex justify-center items-center">
+                                                            <img th:src="'data:image/jpeg;base64,'+ ${drink.getDrink_picture()}"
+                                                                    alt="iced" class="md:w-4/5 lg:w-3/4 h-[115px]">
+                                                    </div>
+                                                    <div class="absolute inset-x-0 bottom-0">
+                                                            <h4 th:text="${drink.getDrink_name()}"></h4>
+                                                            <h5 th:text="'$'+${drink.getPrices()}"></h5>
+                                                    </div>
+                                            </a>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="relative">
+                                <h1 class="font-semibold text-2xl text-center mt-5 border-b border-black p-4">
+                                        Order Information</h1>
+                                <div class="w-full relative overflow-y-auto h-[455px]" id="">
+                                        <table class="w-full lg:w-full xl:w-full">
+                                                <tbody>
+                                                        <tr  th:each="order : ${orders}" class="">
+                                                                <th th:text="${order.getId()}" scope="row" class="px-2 py-4 font-medium  ">
+                                                                        <!-- 1 -->
+                                                                </th>
+                                                                <td th:text="${order.getDrinks().getDrink_name()}" class="px-5 py-4 whitespace-nowrap">
+                                                                        <!-- DF001 -->
+                                                                </td>
+                                                                <td th:text="${order.getSizes().getSize_name()}" class="px-6 py-4  whitespace-nowrap">
+                                                                        <!-- French Fries -->
+                                                                </td>
+                                                                <td class="px-6 py-4  whitespace-nowrap wrapper">
+                                                                    <button class="plus">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                            d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                                                            </svg>
+                                                                    </button>
+                                                                    <button class="num" th:text="${order.getQuantity()}"></button>
+                                                                    <button class="minus ">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                                            </svg>
+    
+                                                                    </button>
+                                                                </td>
+                                                                <td th:if="${order.getAddons() == null}" th:text="'$' + (${order.getTotal_price()})" class="px-6 py-4  whitespace-nowrap">
+                                                                        <!-- 1.5 -->
+                                                                </td>
+                                                                <td th:unless="${order.getAddons() == null}" th:text="'$' + (${order.getTotal_price()})" class="px-6 py-4  whitespace-nowrap">
+                                                                        
+                                                                </td>
+                                                                <td class="px-6 py-4 flex">
+                                                                        <div class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="none" viewBox="0 0 24 24"
+                                                                                stroke-width="1.5" stroke="currentColor"
+                                                                                class="w-6 h-6">
+                                                                                <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="none" viewBox="0 0 24 24"
+                                                                                stroke-width="1.5" stroke="currentColor"
+                                                                                class="w-6 h-6">
+                                                                                <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                            </svg>
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                        
+                                                </tbody>
+                                        </table>
+
+                                        <form th:action="@{/newCheckoutCate/table={tableId}/cashier={cashierId}category={categoryId} (tableId=${table.getId()}, cashierId=${cashier.getId()}, categoryId=${categorySelect.getId()})}">
+                                            <div class="text-blue-700 fixed flex left-[50%] top-[50%] w-[600px] translate-x-[-50%] translate-y-[-50%] h-[400px] bg-blue-200 z-10 rounded-[20px]">
+                                                    <div class="font-semibold w-full flex flex-col justify-center items-center">
+                                                            
+                                                            <div class="bg-white w-[350px] h-[30px] flex items-center pl-[40px] rounded-[10px]">
+                                                                    <label for="" class="mr-[20px]">Cash In:</label>
+                                                                    <input type="text" placeholder="$0.00" name="cashIn" th:value="'$'+${cashIn}" class=" pl-[10px] outline-none bg-gray-200 rounded-[10px]" required>
+                                                            </div>
+                                                            <br>
+                                                            <div class="bg-white w-[350px] h-[30px] flex items-center pl-[50px] rounded-[10px]">
+                                                                    <label for="" class="pl-[8px] mr-[20px]">Total:</label>
+                                                                    <input type="text" th:value="'$'+${totalprice}" class=" pl-[10px] bg-gray-200 rounded-[10px]" disabled>
+                                                            </div>
+                                                            <br>
+                                                            <div class="bg-white w-[350px] h-[30px] flex items-center pl-[38px] rounded-[10px]">
+                                                                    <label for="" class="mr-[20px]">Change:</label>
+                                                                    <input type="text" th:value="'$'+${change}" class=" pl-[10px] bg-gray-200 rounded-[10px]" disabled>
+                                                            </div>
+                                                            <br>
+                                                            <div class=" w-[350px] h-[60px] flex items-center justify-evenly rounded-[10px] text-white font-bold">
+                                                                    <button class="w-[100px] h-[50px] bg-sky-500 hover:bg-sky-400 mr-[10px] rounded-[10px]" type="submit">Checkout</button>
+                                                                    <a th:href="@{/drinkSelection/table={tableId}/cashier={cashierId}/category={categoryId}/checkout/cash={money}/total={price}/change={ch} (tableId=${table.getId()}, cashierId=${cashier.getId()}, categoryId=${categorySelect.getId()}, money=${cashIn}, price=${totalprice}, ch=${change})}"><button class="w-[100px] h-[50px] bg-sky-500 hover:bg-sky-400 mr-[10px] rounded-[10px]" type="button">OK</button></a>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                        </form>
+                                </div>
+                                <div class="items-center w-full p-5 absolute inset-x-0 bottom-0  text-center">
+                                        <div class="border-t border-black h-fit round-full p-3">
+                                                <div class="flex gap-[360px]">
+                                                        <div class="">Cash</div>
+                                                        <div class=""></div>
+                                                </div>
+                                               
+                                                <div class="flex gap-[360px]">
+                                                        <h4>Total </h4>
+                                                        <h4></h4>
+                                                </div>
+                                        </div>
+                                        <div class=" border-t border-black round-lg">
+                                                <div class="flex gap-96 p-3">
+                                                        <h4>Change</h4>
+                                                        <h4></h4>
+                                                </div>
+                                                
+                                                <div class="flex justify-end m-3">
+                                                        <div>
+                                                                <button id="checkout" type="button"
+                                                                        class="w-48 shadow bg-sky-500 hover:bg-sky-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg mx-2">
+                                                                                Total
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                       
+                </div>
+        </div>
+        
+        <script>
+               
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Selection</title>
+    <style>
+        .header{
+            width: 100%;
+            border: 1px solid black;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgb(61, 54, 54);
+        }
+        .title{
+            margin-left: 30px;
+            color: #ffffff;
+        }
+        .btn{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-right: 30px;
+            padding: 6px;
+            background-color: rgb(45, 116, 92);
+            border-radius: 10px;
+            position: relative;
+            transition: 10s linear;
+        }
+        .btn img{
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .btn .drop{
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .btn .dropdown-btn{
+            display: none;
+            z-index: 1;
+        }
+        .btn .dropdown-btn a{
+            text-decoration: none;
+            padding: 8px 10px;
+            background-color: #fcf1f1;
+            color: blue;
+            border-radius: 8px;
+            border: 1px solid rgb(30, 30, 150);
+        }
+        .btn:hover .dropdown-btn{
+            display: inline-block;
+            transition: 2s;
+        }
+        .btn h4{
+            color: #ffffff;
+            margin: 0;
+        }
+        .wrapper{
+            width: 100%;
+            height: 95vh;
+            display: flex;
+            border: 1px solid black;
+        }
+        .left-side{
+            width: 50%;
+            height: 100%;
+            background-color: beige;
+            overflow-y: auto;
+        }
+        .row_wrapper{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            column-gap: 5px;
+            padding: 10px;
+        }
+        .column-wrapper{
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            padding-bottom: 10px;
+        }
+        .box1{
+            background-color: rgb(107, 87, 224);
+            width: 110px;
+            height: 106px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-right: 6px;
+            margin-bottom: 11px;
+        }
+        .box2{
+            background-color: rgb(249, 25, 5);
+            width: 110px;
+            height: 106px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-right: 6px;
+            margin-bottom: 11px;
+        }
+        .box3{
+            background-color: rgb(249, 200, 5);
+            width: 110px;
+            height: 106px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-right: 6px;
+            margin-bottom: 11px;
+        }
+        .right-side{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: gainsboro;
+            border-left: 1px solid black;
+        }
+        .sub{
+            display: flex;
+            flex-direction: column;
+        }
+        span{
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body th:object="${cashier}">
+    <div class="header">
+        <div class="title">
+            <h2>Table Selection</h2>
+        </div>
+        <div class="btn">
+            <img th:src="@{'data:image/jpeg;base64,' + ${cashier.getProfile()} }">
+            <div class="drop">
+                <h4 th:text="${cashier.getUsername()}" ></h4>
+            </div>
+            <div class="dropdown-btn">
+                <a href="/login">Log Out</a>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="left-side">
+            <div class="row_wrapper">
+                <div class="container" 
+                    th:each="table : ${tables}">
+                    <button th:text="${table.getNumber()}" 
+                        th:if="${table.getAvailability() == 1}"
+                        th:onclick="tableInfo([[${table.getNumber()}]], [[${table.getAvailability()}]])"
+                        th:ondblclick="orderProduct([[${table.getId()}]], [[${cashier.getId()}]])"
+                        class="box1">
+                    </button>
+                    <button th:text="${table.getNumber()}" 
+                        th:if="${table.getAvailability() == 0}"
+                        th:onclick="tableInfo([[${table.getNumber()}]], [[${table.getAvailability()}]])"
+                        th:ondblclick="makeAvailable([[${table.getId()}]], [[${cashier.getId()}]])"
+                        class="box2">
+                    </button>
+                    <button th:text="${table.getNumber()}"
+                        th:if="${table.getAvailability() == 2}"
+                        th:onclick="tableInfo([[${table.getNumber()}]], [[${table.getAvailability()}]])"
+                        th:ondblclick="makeAvailable([[${table.getId()}]], [[${cashier.getId()}]])"
+                        class="box3">
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="con">
+                <div class="sub" id="sub-title">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        const title = document.getElementById("sub-title");
+        function hello(){
+            title.innerHTML = `
+                <span>Ex</span>
+                <span>Table: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;02</span>
+                <span>Status: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Available</span>
+                <span>Orders: &nbsp;&nbsp;&nbsp;&nbsp;Ice americano</span>
+            `;
+        }
+        function tableInfo(tableNum, availability){
+            let content = '';
+
+            if(availability == 1) {
+                content = `
+                <h1>Table information</h1>
+                <div>
+                    <span>Table: ${tableNum}</span>
+                    <br>
+                    <span>Status: available</span>
+                </div>
+            `;
+            }
+            else if(availability == 0) {
+                content = `
+                    <h1>Table information</h1>
+                    <div>
+                        <span>Table: ${tableNum}</span>
+                        <br>
+                        <span>Status: unavailable</span>
+                    </div>
+                `;
+            }
+            else if(availability == 2) {
+                content = `
+                    <h1>Table information</h1>
+                    <div>
+                        <span>Table: ${tableNum}</span>
+                        <br>
+                        <span>Status: serving</span>
+                    </div>
+                `;
+            }
+            title.innerHTML = content;
+        }
+
+        function orderProduct(tableId, cashierId) {
+            location.href = `/drinkSelection/table=${tableId}/cashier=${cashierId}`;
+        }
+
+        function makeAvailable(tableId, cashierId) {
+            location.href = `/tableSelection/makeAvailable/table=${tableId}/cashier=${cashierId}`;
+        }
+    </script>
+</body>
+</html>
